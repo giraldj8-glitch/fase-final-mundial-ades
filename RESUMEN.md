@@ -3,6 +3,7 @@
 ## Archivos
 
 - `index.html`: simulador independiente para 16avos en adelante.
+- `ejemplo-apuesta-ficticia.html`: ejemplo ficticio del archivo que descarga una persona, con tabla visible de clasificados, forma y marcador.
 - El tablero anterior de fase de grupos queda en `../16avos/index.html` como referencia y consulta.
 
 ## Flujo de uso
@@ -48,7 +49,7 @@ Fuentes usadas:
 ## Notas técnicas
 
 - El HTML es autocontenido, sin dependencias externas.
-- Las apuestas descargadas incluyen un `embedded-state` con los picks del apostador.
+- Las apuestas descargadas muestran una tabla visible con todos los partidos, clasificado, forma y marcador; además incluyen un `embedded-state` con los picks del apostador para que el admin las pueda importar.
 - El admin puede importar múltiples HTML a la vez.
 - El botón de envío intenta compartir el archivo desde iPhone/Android usando el menú nativo. Si el navegador no permite adjuntar archivos, descarga el HTML y abre WhatsApp al número `573132776899` con el mensaje listo.
 - Los resultados reales se guardan en el navegador y también quedan embebidos al exportar el HTML actualizado.

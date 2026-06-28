@@ -1074,7 +1074,7 @@
       const picks = {};
       matches.forEach(m => { picks[m.id] = draft[m.id]; });
       const payload = { version: 1, simulatorSubmission: { name, round: state.openRound, picks, exportedAt: new Date().toISOString() } };
-      const html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Apuesta ' + escapeHtml(name) + '</title></head><body><script id="embedded-state" type="application/json">' + JSON.stringify(payload).replace(/</g, '\\u003c') + '<\/script><h1>Apuesta enviada</h1><p>' + escapeHtml(name) + ' · ' + roundInfo(state.openRound).title + '</p></body></html>';
+      const html = submissionHtml(name, state.openRound, picks, payload);
       const filename = 'apuesta-' + slugify(name) + '-' + state.openRound + '.html';
       const file = new File([html], filename, { type: 'text/html' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -1097,6 +1097,25 @@
       const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(whatsappText(name));
       const opened = window.open(url, '_blank', 'noopener');
       if (!opened) window.location.href = url;
+    }
+    function submissionHtml(name, round, picks, payload) {
+      const info = roundInfo(round);
+      const exported = new Date(payload.simulatorSubmission.exportedAt).toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' });
+      return '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Resultados ' + escapeHtml(name) + '</title>' +
+        '<style>*{box-sizing:border-box}body{margin:0;background:#111419;color:#fff;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;line-height:1.45}.page{max-width:1040px;margin:0 auto;padding:18px}.hero{border:1px solid rgba(255,255,255,.14);border-radius:8px;background:#252b35;padding:18px;margin-bottom:14px}.eyebrow{color:#22c7d8;text-transform:uppercase;font-size:.75rem;font-weight:900;letter-spacing:.08em}h1{margin:4px 0 6px;font-size:1.7rem}.muted{color:#cbd3dd}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.badge{border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 10px;background:rgba(255,255,255,.06);font-weight:800;color:#cbd3dd}.note{border:1px solid rgba(255,180,67,.35);background:rgba(255,180,67,.1);border-radius:8px;padding:12px;margin-bottom:14px;color:#ffe0a8}.table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:#1a1f27}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px;border-bottom:1px solid rgba(255,255,255,.09);text-align:left}th{color:#a4adb8;text-transform:uppercase;font-size:.72rem;letter-spacing:.04em}tr:last-child td{border-bottom:0}.team{font-weight:900}.winner{color:#32d894;font-weight:950}.score{font-weight:950;color:#ffb443}.method{color:#22c7d8;font-weight:850}.footer{margin-top:14px;color:#a4adb8;font-size:.9rem}@media(max-width:680px){.page{padding:12px}h1{font-size:1.35rem}}</style></head><body>' +
+        '<script id="embedded-state" type="application/json">' + JSON.stringify(payload).replace(/</g, '\\u003c') + '<\/script>' +
+        '<main class="page"><section class="hero"><div class="eyebrow">Fase Final Mundial ADES</div><h1>Resultados de ' + escapeHtml(name) + '</h1><p class="muted">' + info.title + ' · archivo para importar en el tablero del admin.</p><div class="badges"><span class="badge">Apostador: ' + escapeHtml(name) + '</span><span class="badge">Ronda: ' + info.label + '</span><span class="badge">Exportado: ' + escapeHtml(exported) + '</span></div></section>' +
+        '<div class="note"><strong>Cómo leerlo:</strong> cada fila muestra el clasificado elegido, la forma de clasificación y el marcador apostado. Si eligió prórroga o penales, el marcador corresponde a 120 minutos y no incluye tiros penales.</div>' +
+        '<div class="table-wrap"><table><thead><tr><th>#</th><th>Partido</th><th>Clasifica</th><th>Forma</th><th>Marcador</th></tr></thead><tbody>' + submissionRows(round, picks) + '</tbody></table></div>' +
+        '<p class="footer">No edites este archivo antes de enviarlo. El admin lo importa para actualizar la tabla de posiciones.</p></main></body></html>';
+    }
+    function submissionRows(round, picks) {
+      return roundMatches(round).filter(isKnown).map(m => {
+        const pick = picks[m.id] || {};
+        const h = teamName(m, 'home');
+        const a = teamName(m, 'away');
+        return '<tr><td>#' + m.id + '</td><td><span class="team">' + flag(h) + ' ' + escapeHtml(h) + '</span> vs <span class="team">' + flag(a) + ' ' + escapeHtml(a) + '</span></td><td class="winner">' + flag(pick.winner) + ' ' + escapeHtml(pick.winner) + '</td><td class="method">' + methodLabel(pick.method) + '</td><td class="score">' + Number(pick.h) + '-' + Number(pick.a) + '</td></tr>';
+      }).join('');
     }
     async function importFiles(files) {
       if (!adminUnlocked) { showToast('Desbloquea admin primero'); return; }
