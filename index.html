@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fase Final Mundial ADES</title>
+  <style>
+    :root {
+      --ink: #111419;
+      --navy: #20242c;
+      --surface: #252b35;
+      --surface-2: #303946;
+      --line: rgba(255,255,255,.13);
+      --muted: #cbd3dd;
+      --gray: #a4adb8;
+      --white: #fff;
+      --blue: #3e7bef;
+      --cyan: #22c7d8;
+      --green: #32d894;
+      --orange: #ffb443;
+      --red: #ff5d73;
+      --radius: 8px;
+      --pill: 999px;
+      --shadow: 0 18px 54px rgba(0,0,0,.28);
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(180deg, #252a33, var(--ink) 78%);
+      background-size: 28px 28px, 28px 28px, auto;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; touch-action: manipulation; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(34,199,216,.38);
+      outline-offset: 2px;
+    }
+
+    .app { width: min(1480px, 100%); margin: 0 auto; padding: 0 16px 20px; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin: 0 -16px 16px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: rgba(32,36,44,.94);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand { display: flex; gap: 10px; align-items: center; min-width: 0; }
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      font-weight: 950;
+      flex: 0 0 auto;
+    }
+    h1, h2, h3, h4, p { margin-top: 0; }
+    .brand h1 { margin: 0; font-size: 1.02rem; line-height: 1.1; }
+    .brand p { margin: 2px 0 0; color: var(--muted); font-size: .78rem; }
+    .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: end; }
+
+    .btn {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: var(--pill);
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.045));
+      color: var(--white);
+      padding: 9px 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+    .btn:hover { border-color: rgba(34,199,216,.42); background: linear-gradient(135deg, rgba(62,123,239,.26), rgba(34,199,216,.16)); }
+    .btn.primary { background: linear-gradient(135deg, var(--surface-2), var(--blue)); }
+    .btn.success { color: var(--green); border-color: rgba(50,216,148,.42); background: rgba(50,216,148,.14); }
+    .btn.warn { color: var(--orange); border-color: rgba(255,180,67,.42); background: rgba(255,180,67,.12); }
+    .btn.glow {
+      border-color: rgba(34,199,216,.72);
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      box-shadow: 0 0 0 1px rgba(34,199,216,.16), 0 0 26px rgba(34,199,216,.34);
+      animation: ctaGlow 1.7s ease-in-out infinite;
+    }
+    .btn.big {
+      min-height: 118px;
+      border-radius: var(--radius);
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 18px;
+      text-align: left;
+      font-size: 1.05rem;
+    }
+    .btn.glow.big { min-height: 96px; margin-top: 12px; width: 100%; }
+    .btn.glow.send-btn { min-height: 50px; width: 100%; }
+    .btn.big span { color: var(--muted); font-size: .9rem; font-weight: 650; }
+    .btn.glow span { color: rgba(255,255,255,.9); }
+    @keyframes ctaGlow {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(34,199,216,.16), 0 0 22px rgba(34,199,216,.28); }
+      50% { box-shadow: 0 0 0 1px rgba(34,199,216,.32), 0 0 38px rgba(34,199,216,.56); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn.glow { animation: none; }
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .4fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 16px;
+    }
+    .panel, .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(37,43,53,.88);
+      box-shadow: 0 12px 34px rgba(0,0,0,.2);
+      backdrop-filter: blur(12px);
+      min-width: 0;
+    }
+    .panel { padding: 16px; }
+    .hero h2 { font-size: 2rem; line-height: 1.08; margin: 4px 0 8px; }
+    .eyebrow { color: var(--cyan); text-transform: uppercase; font-size: .72rem; font-weight: 900; letter-spacing: .08em; }
+    .muted { color: var(--muted); }
+    .green { color: var(--green); }
+    .orange { color: var(--orange); }
+    .cyan { color: var(--cyan); }
+    .gray { color: var(--gray); }
+
+    .score-system { display: grid; gap: 8px; }
+    .score-row {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 9px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.045);
+    }
+    .score-row b { font-size: 1.1rem; }
+    .rules-summary {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid rgba(34,199,216,.25);
+      border-radius: var(--radius);
+      background: rgba(34,199,216,.07);
+    }
+    .rules-summary h3 { margin: 0; font-size: 1rem; }
+    .rules-summary ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .rules-summary li + li { margin-top: 4px; }
+    .deadline-card {
+      display: grid;
+      gap: 4px;
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255,180,67,.34);
+      border-radius: var(--radius);
+      background: rgba(255,180,67,.1);
+    }
+    .deadline-card strong { color: var(--orange); }
+    .quick-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .quick-step {
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.045);
+      color: var(--muted);
+      font-weight: 750;
+    }
+    .quick-step b {
+      display: block;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .send-box {
+      display: grid;
+      gap: 7px;
+      min-width: min(100%, 320px);
+    }
+    .send-box small {
+      color: var(--gray);
+      line-height: 1.3;
+    }
+    .home-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .tabs button {
+      min-height: 40px;
+      min-width: max-content;
+      border: 1px solid var(--line);
+      border-radius: var(--pill);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      padding: 8px 12px;
+      font-weight: 850;
+    }
+    .tabs button.active { color: var(--white); border-color: rgba(50,216,148,.45); background: rgba(50,216,148,.14); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(330px, .7fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .section-head h3 { margin: 0; }
+    .section-head p { margin: 3px 0 0; color: var(--muted); }
+
+    .formbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+    label { color: var(--gray); font-size: .72rem; text-transform: uppercase; font-weight: 900; letter-spacing: .04em; }
+    .field { display: grid; gap: 6px; }
+    input, select {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--pill);
+      background: rgba(17,20,25,.54);
+      color: var(--white);
+      padding: 0 11px;
+      font-weight: 800;
+    }
+    input[type="number"] { text-align: center; padding: 0 4px; }
+    input[type="file"] { border-radius: var(--radius); padding: 9px; height: auto; }
+
+    .fixture-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .fixture {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(37,43,53,.84);
+    }
+    .fixture.done { border-color: rgba(50,216,148,.42); }
+    .fixture-head { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .78rem; font-weight: 850; }
+    .teams {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto minmax(0,1fr);
+      gap: 8px;
+      align-items: center;
+    }
+    .team {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius);
+      background: rgba(17,20,25,.38);
+      text-align: center;
+      font-weight: 900;
+      min-width: 0;
+    }
+    button.team {
+      width: 100%;
+      color: var(--white);
+      cursor: pointer;
+    }
+    button.team.selected {
+      border-color: rgba(50,216,148,.66);
+      background: rgba(50,216,148,.15);
+      color: var(--green);
+    }
+    button.team[disabled] { opacity: .5; cursor: not-allowed; }
+    .team span:last-child { overflow-wrap: anywhere; }
+    .versus { color: var(--gray); font-weight: 900; }
+    .prediction, .admin-result {
+      display: grid;
+      grid-template-columns: 42px 42px minmax(180px, 1fr);
+      gap: 8px;
+      align-items: end;
+      padding-top: 9px;
+      border-top: 1px dashed rgba(255,255,255,.16);
+    }
+    .pick-step { display: grid; gap: 8px; }
+    .pick-step-title { color: var(--gray); font-size: .72rem; text-transform: uppercase; font-weight: 900; }
+    .method-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .method-buttons button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--pill);
+      background: rgba(255,255,255,.045);
+      color: var(--muted);
+      padding: 7px 9px;
+      font-weight: 850;
+    }
+    .method-buttons button.selected {
+      border-color: rgba(34,199,216,.56);
+      background: rgba(34,199,216,.14);
+      color: var(--cyan);
+    }
+    .method-buttons button[disabled] { opacity: .5; cursor: not-allowed; }
+    .mini-field { display: grid; gap: 5px; }
+    .mini-field label { font-size: .64rem; }
+    .meta {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border: 1px solid rgba(164,173,184,.28);
+      border-radius: var(--pill);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-weight: 850;
+      font-size: .76rem;
+      white-space: nowrap;
+    }
+    .badge.done { color: var(--green); border-color: rgba(50,216,148,.36); background: rgba(50,216,148,.12); }
+    .badge.warn { color: var(--orange); border-color: rgba(255,180,67,.34); background: rgba(255,180,67,.12); }
+
+    .admin-box {
+      display: none;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .admin-box.open { display: grid; }
+    .admin-tools { display: none; gap: 10px; }
+    .admin-tools.unlocked { display: grid; }
+    .rank-list, .submission-list { display: grid; gap: 8px; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(17,20,25,.28);
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      color: var(--gray);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 900;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody tr.top { background: linear-gradient(90deg, rgba(255,180,67,.14), rgba(50,216,148,.07), transparent); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .rank-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+    }
+    .rank-row .pos {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(62,123,239,.22);
+      font-weight: 950;
+    }
+    .rank-row small, .submission-list small { color: var(--gray); display: block; }
+    .actual-list { display: grid; gap: 10px; }
+    .actual-row {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+    }
+    .bracket-panel { margin-bottom: 16px; }
+    .bracket-scroll { overflow-x: auto; padding: 4px 2px 8px; }
+    .bracket-grid {
+      min-width: 1180px;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(170px, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .bracket-col {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .bracket-col-title {
+      color: var(--gray);
+      font-size: .72rem;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .04em;
+      min-height: 22px;
+    }
+    .bracket-match {
+      display: grid;
+      gap: 7px;
+      padding: 10px;
+      border: 1px solid rgba(34,199,216,.22);
+      border-radius: var(--radius);
+      background: rgba(17,20,25,.58);
+      min-height: 118px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .bracket-team {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 6px;
+      align-items: center;
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,.045);
+      font-weight: 850;
+      min-width: 0;
+    }
+    .bracket-team span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bracket-team.winner {
+      color: var(--green);
+      background: rgba(50,216,148,.12);
+      box-shadow: inset 0 0 0 1px rgba(50,216,148,.28);
+    }
+    .bracket-score {
+      min-width: 22px;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .bracket-note { color: var(--gray); font-size: .72rem; }
+    .bracket-source {
+      color: var(--gray);
+      font-size: .72rem;
+      line-height: 1.25;
+    }
+    .champion {
+      display: grid;
+      gap: 6px;
+      place-items: center;
+      min-height: 106px;
+      border: 1px solid rgba(255,180,67,.34);
+      border-radius: var(--radius);
+      background: rgba(255,180,67,.1);
+      text-align: center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    .champion strong { font-size: 1.1rem; }
+    .empty { color: var(--muted); padding: 12px; border: 1px dashed rgba(255,255,255,.16); border-radius: var(--radius); }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translate(-50%, 120px);
+      z-index: 60;
+      max-width: min(92vw, 680px);
+      padding: 12px 16px;
+      border: 1px solid rgba(34,199,216,.5);
+      border-radius: var(--radius);
+      background: #071153;
+      color: var(--white);
+      box-shadow: var(--shadow);
+      transition: transform .24s ease;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    @media (max-width: 980px) {
+      .topbar, .hero, .layout, .fixture-grid, .formbar, .home-actions, .quick-steps { grid-template-columns: 1fr; }
+      .actions { justify-content: start; }
+    }
+    @media (max-width: 680px) {
+      .prediction, .admin-result, .method-buttons { grid-template-columns: 1fr; }
+      .teams { grid-template-columns: 1fr; }
+      .versus { text-align: center; }
+      .hero h2 { font-size: 1.55rem; }
+    }
+  </style>
+</head>
+<body>
+  <script id="embedded-state" type="application/json">{"version":1,"submissions":[],"actuals":{},"openRound":"r32","updatedAt":"2026-06-28T00:00:00-05:00"}</script>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <h1>Fase Final Mundial ADES</h1>
+          <p>16avos en adelante · hora Colombia · descarga tus resultados para WhatsApp</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" data-screen="home" type="button">Inicio</button>
+        <button class="btn primary" data-screen="bet" type="button">Agregar apuesta</button>
+        <button class="btn success" data-screen="follow" type="button">Seguir resultados</button>
+        <button class="btn" id="printBtn" type="button">Imprimir</button>
+        <button class="btn warn" id="adminToggle" type="button">Admin</button>
+      </div>
+    </header>
+
+    <section class="screen active" id="screen-home">
+      <div class="hero">
+        <div class="panel">
+          <div class="eyebrow">Apuestas por eliminación directa</div>
+          <h2>Llena tus cruces y envía tus resultados.</h2>
+          <p class="muted">Cada persona debe escribir su nombre, elegir quién clasifica, cómo clasifica y el marcador de cada partido. Al final descarga sus resultados y te los envía por WhatsApp.</p>
+          <div class="deadline-card">
+            <strong>Cierre de 16avos</strong>
+            <span>Envíalo antes de Sudáfrica vs Canadá: domingo 28 de junio, 2:00 p.m. hora Colombia.</span>
+          </div>
+          <button class="btn big primary glow" data-screen="bet" type="button">Agregar apuesta <span>Llena tu nombre, clasificados, forma y goles. Luego descarga tus resultados para enviarlos.</span></button>
+          <div class="rules-summary">
+            <h3>Reglas rápidas</h3>
+            <ul>
+              <li><strong>3 pts</strong> por acertar el equipo que clasifica.</li>
+              <li><strong>5 pts</strong> por marcador exacto: 90 minutos si pasa en tiempo reglamentario, 120 minutos si va a prórroga o penales.</li>
+              <li><strong>2 pts</strong> por acertar la forma de clasificación: tiempo reglamentario, prórroga o penales. Este bonus solo cuenta si también acertó el clasificado.</li>
+              <li><strong>10 pts</strong> máximo por partido. Desempate: puntos, clasificados, marcadores exactos, formas acertadas y nombre.</li>
+            </ul>
+          </div>
+          <div class="home-actions">
+            <button class="btn big success" data-screen="follow" type="button">Seguir resultados <span>Tabla de participantes, resultados reales y panel de administración.</span></button>
+          </div>
+        </div>
+        <div class="panel score-system">
+          <div class="score-row"><b class="green">3</b><span>Clasificado correcto.</span></div>
+          <div class="score-row"><b class="orange">5</b><span>Marcador exacto. Es de 90 minutos si eliges tiempo reglamentario; si eliges prórroga o penales, es el marcador tras 120 minutos, sin contar tiros penales.</span></div>
+          <div class="score-row"><b class="cyan">2</b><span>Forma correcta: tiempo reglamentario, prórroga o penales. Solo cuenta si acertó el clasificado.</span></div>
+          <div class="score-row"><b>10</b><span>Máximo por partido perfecto.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-bet">
+      <div class="tabs" id="betRoundTabs"></div>
+      <main class="panel">
+        <div class="section-head">
+          <div>
+            <h3 id="betRoundTitle">16avos de final</h3>
+            <p id="betRoundHint">Completa todos los partidos y descarga tus resultados para enviarlos por WhatsApp.</p>
+          </div>
+          <span class="badge done" id="betOpenRoundBadge">Ronda abierta</span>
+        </div>
+        <div class="quick-steps">
+          <div class="quick-step"><b>1. Nombre</b>Sin nombre no se puede descargar.</div>
+          <div class="quick-step"><b>2. Clasificado</b>Toca el equipo que pasa.</div>
+          <div class="quick-step"><b>3. Forma</b>Tiempo regl., prórroga o penales.</div>
+          <div class="quick-step"><b>4. Goles</b>Un solo marcador por partido.</div>
+        </div>
+        <div class="formbar">
+          <div class="field">
+            <label for="playerName">Nombre del apostador</label>
+            <input id="playerName" type="text" placeholder="Ej: Andrés G">
+          </div>
+          <div class="send-box">
+            <button class="btn primary glow send-btn" id="downloadBtn" type="button">Descargar / enviar mis resultados</button>
+            <small>En celular intentará compartir el archivo. Si no se puede, lo descarga y abre WhatsApp para que lo adjuntes.</small>
+          </div>
+        </div>
+        <div class="fixture-grid" id="betFixtureGrid"></div>
+      </main>
+    </section>
+
+    <section class="screen" id="screen-follow">
+      <div class="tabs" id="followRoundTabs"></div>
+      <div class="panel bracket-panel">
+        <div class="section-head">
+          <div>
+            <h3>Llave del torneo</h3>
+            <p>Vista tipo bracket; se actualiza con los ganadores que cargue el admin.</p>
+          </div>
+          <span class="badge warn" id="championBadge">Campeón pendiente</span>
+        </div>
+        <div class="bracket-scroll">
+          <div class="bracket-grid" id="bracketGrid"></div>
+        </div>
+      </div>
+      <div class="layout">
+      <main class="panel">
+        <div class="section-head">
+          <div>
+            <h3 id="followRoundTitle">Resultados 16avos</h3>
+            <p>Resultados reales y estado de cada cruce. El admin puede actualizarlos aquí.</p>
+          </div>
+          <span class="badge" id="actualCount">0 definidos</span>
+        </div>
+        <div class="actual-list" id="actualGrid"></div>
+      </main>
+
+      <aside class="panel">
+        <div class="section-head">
+          <div>
+            <h3>Tabla de posiciones</h3>
+            <p>Se actualiza con los HTML importados y los resultados reales.</p>
+          </div>
+          <span class="badge" id="submissionCount">0 archivos</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Ronda</th>
+                <th class="num">Puntos</th>
+                <th class="num">Clasif.</th>
+                <th class="num">Marcador</th>
+                <th class="num">Forma</th>
+                <th class="num">Pend.</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody"></tbody>
+          </table>
+        </div>
+        <div id="ranking" class="rank-list"></div>
+
+        <div class="admin-box" id="adminBox">
+          <div class="field">
+            <label for="adminKey">Clave admin</label>
+            <input id="adminKey" type="password" placeholder="Clave">
+          </div>
+          <button class="btn primary" id="unlockBtn" type="button">Desbloquear</button>
+        </div>
+
+        <div class="admin-tools" id="adminTools">
+          <div class="field">
+            <label for="openRound">Ronda que pueden descargar</label>
+            <select id="openRound"></select>
+          </div>
+          <div class="field">
+            <label for="importFiles">Importar HTML recibidos</label>
+            <input id="importFiles" type="file" accept=".html,text/html" multiple>
+          </div>
+          <button class="btn success" id="saveAdminBtn" type="button">Guardar resultados</button>
+          <button class="btn primary" id="exportAdminBtn" type="button">Exportar HTML actualizado</button>
+          <button class="btn" id="lockBtn" type="button">Bloquear admin</button>
+          <div class="submission-list" id="submissionList"></div>
+        </div>
+      </aside>
+      </div>
+    </section>
+  </div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script>
+    const ADMIN_KEY = 'ades2026';
+    const STORAGE_KEY = 'ades_ko_simulator_2026_v1';
+    const WHATSAPP_NUMBER = '573132776899';
+    const ROUNDS = [
+      { id: 'r32', label: '16avos', title: '16avos de final', ids: ['73','76','74','75','78','77','79','80','82','81','84','83','85','88','86','87'] },
+      { id: 'r16', label: 'Octavos', title: 'Octavos de final', ids: ['89','90','91','92','93','94','95','96'] },
+      { id: 'qf', label: 'Cuartos', title: 'Cuartos de final', ids: ['97','98','99','100'] },
+      { id: 'sf', label: 'Semis', title: 'Semifinales', ids: ['101','102'] },
+      { id: 'final', label: 'Final', title: 'Final', ids: ['103'] }
+    ];
+    const ROUND_POINTS = { qualifier: 3, score: 5, method: 2 };
+    const FLAGS = {"Sudáfrica":"🇿🇦","Canadá":"🇨🇦","Brasil":"🇧🇷","Japón":"🇯🇵","Alemania":"🇩🇪","Paraguay":"🇵🇾","Países Bajos":"🇳🇱","Marruecos":"🇲🇦","Costa de Marfil":"🇨🇮","Noruega":"🇳🇴","Francia":"🇫🇷","Suecia":"🇸🇪","México":"🇲🇽","Ecuador":"🇪🇨","Inglaterra":"🏴","RD Congo":"🇨🇩","Bélgica":"🇧🇪","Senegal":"🇸🇳","Estados Unidos":"🇺🇸","Bosnia":"🇧🇦","España":"🇪🇸","Austria":"🇦🇹","Portugal":"🇵🇹","Croacia":"🇭🇷","Suiza":"🇨🇭","Argelia":"🇩🇿","Australia":"🇦🇺","Egipto":"🇪🇬","Argentina":"🇦🇷","Cabo Verde":"🇨🇻","Colombia":"🇨🇴","Ghana":"🇬🇭"};
+    const MATCHES = [
+      { id:'73', round:'r32', home:'Sudáfrica', away:'Canadá', date:'Dom 28 jun', time:'2:00 p.m.', venue:'Los Angeles Stadium' },
+      { id:'76', round:'r32', home:'Brasil', away:'Japón', date:'Lun 29 jun', time:'12:00 p.m.', venue:'Houston Stadium' },
+      { id:'74', round:'r32', home:'Alemania', away:'Paraguay', date:'Lun 29 jun', time:'3:30 p.m.', venue:'Boston Stadium' },
+      { id:'75', round:'r32', home:'Países Bajos', away:'Marruecos', date:'Lun 29 jun', time:'8:00 p.m.', venue:'Monterrey Stadium' },
+      { id:'78', round:'r32', home:'Costa de Marfil', away:'Noruega', date:'Mar 30 jun', time:'12:00 p.m.', venue:'Dallas Stadium' },
+      { id:'77', round:'r32', home:'Francia', away:'Suecia', date:'Mar 30 jun', time:'4:00 p.m.', venue:'New York/New Jersey Stadium' },
+      { id:'79', round:'r32', home:'México', away:'Ecuador', date:'Mar 30 jun', time:'8:00 p.m.', venue:'Mexico City Stadium' },
+      { id:'80', round:'r32', home:'Inglaterra', away:'RD Congo', date:'Mié 1 jul', time:'11:00 a.m.', venue:'Atlanta Stadium' },
+      { id:'82', round:'r32', home:'Bélgica', away:'Senegal', date:'Mié 1 jul', time:'3:00 p.m.', venue:'Seattle Stadium' },
+      { id:'81', round:'r32', home:'Estados Unidos', away:'Bosnia', date:'Mié 1 jul', time:'7:00 p.m.', venue:'San Francisco Bay Stadium' },
+      { id:'84', round:'r32', home:'España', away:'Austria', date:'Jue 2 jul', time:'2:00 p.m.', venue:'Los Angeles Stadium' },
+      { id:'83', round:'r32', home:'Portugal', away:'Croacia', date:'Jue 2 jul', time:'6:00 p.m.', venue:'Toronto Stadium' },
+      { id:'85', round:'r32', home:'Suiza', away:'Argelia', date:'Jue 2 jul', time:'10:00 p.m.', venue:'BC Place Vancouver' },
+      { id:'88', round:'r32', home:'Australia', away:'Egipto', date:'Vie 3 jul', time:'1:00 p.m.', venue:'Dallas Stadium' },
+      { id:'86', round:'r32', home:'Argentina', away:'Cabo Verde', date:'Vie 3 jul', time:'5:00 p.m.', venue:'Miami Stadium' },
+      { id:'87', round:'r32', home:'Colombia', away:'Ghana', date:'Vie 3 jul', time:'8:30 p.m.', venue:'Kansas City Stadium' },
+      { id:'89', round:'r16', homeFrom:'73', awayFrom:'75' },
+      { id:'90', round:'r16', homeFrom:'74', awayFrom:'77' },
+      { id:'91', round:'r16', homeFrom:'76', awayFrom:'78' },
+      { id:'92', round:'r16', homeFrom:'79', awayFrom:'80' },
+      { id:'93', round:'r16', homeFrom:'83', awayFrom:'84' },
+      { id:'94', round:'r16', homeFrom:'81', awayFrom:'82' },
+      { id:'95', round:'r16', homeFrom:'86', awayFrom:'88' },
+      { id:'96', round:'r16', homeFrom:'85', awayFrom:'87' },
+      { id:'97', round:'qf', homeFrom:'89', awayFrom:'90' },
+      { id:'98', round:'qf', homeFrom:'93', awayFrom:'94' },
+      { id:'99', round:'qf', homeFrom:'91', awayFrom:'92' },
+      { id:'100', round:'qf', homeFrom:'95', awayFrom:'96' },
+      { id:'101', round:'sf', homeFrom:'97', awayFrom:'98' },
+      { id:'102', round:'sf', homeFrom:'99', awayFrom:'100' },
+      { id:'103', round:'final', homeFrom:'101', awayFrom:'102' }
+    ];
+    const BRACKET_DATES = { r16: '4-7 jul', qf: '9-11 jul', sf: '14-15 jul', final: '19 jul' };
+
+    let state = loadState();
+    let adminUnlocked = false;
+    let activeScreen = 'home';
+    let betRound = state.openRound || 'r32';
+    let followRound = state.openRound || 'r32';
+    let draft = {};
+
+    function embeddedState() {
+      try { return JSON.parse(document.getElementById('embedded-state').textContent); }
+      catch (e) { return { version: 1, submissions: [], actuals: {}, openRound: 'r32' }; }
+    }
+    function loadState() {
+      const base = embeddedState();
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return normalizeState(JSON.parse(saved), base);
+      } catch (e) { console.warn(e); }
+      return normalizeState(base, base);
+    }
+    function normalizeState(value, base) {
+      return {
+        version: 1,
+        submissions: Array.isArray(value.submissions) ? value.submissions : (base.submissions || []),
+        actuals: { ...(base.actuals || {}), ...(value.actuals || {}) },
+        openRound: value.openRound || base.openRound || 'r32',
+        updatedAt: value.updatedAt || base.updatedAt || new Date().toISOString()
+      };
+    }
+    function saveState(silent=false) {
+      state.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (!silent) showToast('Guardado');
+    }
+    function matchById(id) { return MATCHES.find(m => m.id === String(id)); }
+    function roundInfo(id) { return ROUNDS.find(r => r.id === id) || ROUNDS[0]; }
+    function flag(team) { return FLAGS[team] || '•'; }
+    function methodLabel(value) {
+      return value === 'extra' ? 'Prórroga' : value === 'penalties' ? 'Penales' : 'Tiempo regl.';
+    }
+    function teamName(match, side) {
+      if (match[side]) return match[side];
+      const source = matchById(match[side + 'From']);
+      const winner = source ? state.actuals[source.id]?.winner : '';
+      return winner || 'Ganador #' + (match[side + 'From'] || '');
+    }
+    function isKnown(match) {
+      return teamName(match, 'home') && teamName(match, 'away') && !teamName(match, 'home').startsWith('Ganador') && !teamName(match, 'away').startsWith('Ganador');
+    }
+    function roundMatches(roundId) {
+      const ids = roundInfo(roundId).ids;
+      return ids.map(matchById).filter(Boolean);
+    }
+
+    function renderAll() {
+      renderScreens();
+      renderTabs('betRoundTabs', betRound, value => { betRound = value; renderAll(); });
+      renderTabs('followRoundTabs', followRound, value => { followRound = value; renderAll(); });
+      renderOpenRoundControl();
+      renderBetFixtures();
+      renderActualFixtures();
+      renderBracket();
+      renderRanking();
+      renderAdmin();
+    }
+    function setScreen(name) {
+      activeScreen = name;
+      renderScreens();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function renderScreens() {
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.toggle('active', screen.id === 'screen-' + activeScreen));
+    }
+    function renderTabs(id, current, onChange) {
+      const box = document.getElementById(id);
+      box.innerHTML = ROUNDS.map(r => '<button type="button" class="' + (current === r.id ? 'active' : '') + '" data-round="' + r.id + '">' + r.label + '</button>').join('');
+      box.querySelectorAll('[data-round]').forEach(btn => btn.addEventListener('click', () => onChange(btn.dataset.round)));
+    }
+    function renderOpenRoundControl() {
+      const select = document.getElementById('openRound');
+      select.innerHTML = ROUNDS.map(r => '<option value="' + r.id + '"' + (state.openRound === r.id ? ' selected' : '') + '>' + r.title + '</option>').join('');
+    }
+    function renderBetFixtures() {
+      const info = roundInfo(betRound);
+      const open = state.openRound === betRound;
+      document.getElementById('betRoundTitle').textContent = info.title;
+      document.getElementById('betRoundHint').textContent = open ? 'Esta es la ronda habilitada para descargar apuestas.' : 'Esta ronda está cerrada para descargar; puedes verla como referencia.';
+      document.getElementById('betOpenRoundBadge').textContent = open ? 'Ronda abierta' : 'Consulta';
+      document.getElementById('betOpenRoundBadge').className = 'badge ' + (open ? 'done' : 'warn');
+      document.getElementById('betFixtureGrid').innerHTML = roundMatches(betRound).map(m => betFixtureCard(m, open)).join('');
+      bindBetInputs();
+    }
+    function betFixtureCard(m, open) {
+      const h = teamName(m, 'home'), a = teamName(m, 'away');
+      const known = isKnown(m);
+      const pick = draft[m.id] || {};
+      const disabled = open && known ? '' : ' disabled';
+      const scoreNote = pick.method === 'regulation'
+        ? 'Marcador de los 90 minutos.'
+        : pick.method
+          ? 'Marcador tras 120 minutos, sin contar penales.'
+          : 'Elige la forma para saber si el marcador es de 90 o de 120 minutos.';
+      return '<article class="fixture">' +
+        '<div class="fixture-head"><span>#' + m.id + '</span><span>' + (m.date || BRACKET_DATES[m.round] || '') + ' · ' + (m.time || 'Hora por definir') + ' COL</span></div>' +
+        '<div class="pick-step"><div class="pick-step-title">1. ¿Quién clasifica?</div><div class="teams">' +
+          teamButton(m.id, h, pick.winner, disabled) +
+          '<div class="versus">vs</div>' +
+          teamButton(m.id, a, pick.winner, disabled) +
+        '</div></div>' +
+        '<div class="meta"><span class="badge">' + (m.venue || 'Sede por definir') + '</span><span class="badge warn">' + scoreNote + '</span></div>' +
+        '<div class="pick-step"><div class="pick-step-title">2. ¿Cómo clasifica?</div>' + methodButtons(m.id, pick.method, disabled) + '</div>' +
+        '<div class="pick-step"><div class="pick-step-title">3. Marcador único</div>' +
+        '<div class="prediction">' +
+          miniNumber('Goles ' + h, m.id, 'h', pick.h, disabled) +
+          miniNumber('Goles ' + a, m.id, 'a', pick.a, disabled) +
+          '<div class="mini-field"><label>Nota</label><span class="badge">' + scoreNote + '</span></div>' +
+        '</div></div>' +
+      '</article>';
+    }
+    function teamButton(id, team, selected, disabled) {
+      return '<button class="team ' + (selected === team ? 'selected' : '') + '" type="button" data-pick-button="' + id + '" data-field="winner" data-value="' + escapeAttr(team) + '"' + disabled + '>' + flag(team) + '<span>' + escapeHtml(team) + '</span></button>';
+    }
+    function methodButtons(id, selected, disabled) {
+      const methods = [['regulation','Tiempo regl.'], ['extra','Prórroga'], ['penalties','Penales']];
+      return '<div class="method-buttons">' + methods.map(([value, label]) =>
+        '<button type="button" class="' + (selected === value ? 'selected' : '') + '" data-pick-button="' + id + '" data-field="method" data-value="' + value + '"' + disabled + '>' + label + '</button>'
+      ).join('') + '</div>';
+    }
+    function miniNumber(label, id, field, value, disabled) {
+      return '<div class="mini-field"><label>' + label + '</label><input type="number" min="0" max="30" data-pick="' + id + '" data-field="' + field + '" value="' + (value ?? '') + '"' + disabled + '></div>';
+    }
+    function miniSelect(label, id, field, value, options, disabled) {
+      const opts = options.map(opt => {
+        const val = Array.isArray(opt) ? opt[0] : opt;
+        const txt = Array.isArray(opt) ? opt[1] : (opt || 'Seleccionar');
+        return '<option value="' + escapeAttr(val) + '"' + (value === val ? ' selected' : '') + '>' + escapeHtml(txt) + '</option>';
+      }).join('');
+      return '<div class="mini-field"><label>' + label + '</label><select data-pick="' + id + '" data-field="' + field + '"' + disabled + '>' + opts + '</select></div>';
+    }
+    function adminResult(m, h, a, actual, known) {
+      const disabled = known ? '' : ' disabled';
+      return '<div class="admin-result admin-only">' +
+        miniAdminNumber('Real ' + h, m.id, 'h', actual.h, disabled) +
+        miniAdminNumber('Real ' + a, m.id, 'a', actual.a, disabled) +
+        miniAdminSelect('Clasificó', m.id, 'winner', actual.winner, ['', h, a], disabled) +
+        miniAdminSelect('Forma', m.id, 'method', actual.method, [['regulation','Tiempo regl.'], ['extra','Prórroga'], ['penalties','Penales']], disabled) +
+      '</div>';
+    }
+    function miniAdminNumber(label, id, field, value, disabled) {
+      return '<div class="mini-field"><label>' + label + '</label><input type="number" min="0" max="30" data-actual="' + id + '" data-field="' + field + '" value="' + (value ?? '') + '"' + disabled + '></div>';
+    }
+    function miniAdminSelect(label, id, field, value, options, disabled) {
+      const opts = options.map(opt => {
+        const val = Array.isArray(opt) ? opt[0] : opt;
+        const txt = Array.isArray(opt) ? opt[1] : (opt || 'Seleccionar');
+        return '<option value="' + escapeAttr(val) + '"' + (value === val ? ' selected' : '') + '>' + escapeHtml(txt) + '</option>';
+      }).join('');
+      return '<div class="mini-field"><label>' + label + '</label><select data-actual="' + id + '" data-field="' + field + '"' + disabled + '>' + opts + '</select></div>';
+    }
+    function renderActualFixtures() {
+      const info = roundInfo(followRound);
+      const matches = roundMatches(followRound);
+      const done = matches.filter(m => validActual(state.actuals[m.id])).length;
+      document.getElementById('followRoundTitle').textContent = 'Resultados ' + info.label;
+      document.getElementById('actualCount').textContent = done + '/' + matches.length + ' definidos';
+      document.getElementById('actualCount').className = 'badge ' + (done === matches.length ? 'done' : 'warn');
+      document.getElementById('actualGrid').innerHTML = matches.map(actualCard).join('');
+      bindActualInputs();
+    }
+    function renderBracket() {
+      document.getElementById('bracketGrid').innerHTML = ROUNDS.map(round => {
+        // ponytail: explicit source labels beat fragile connector math here.
+        return '<div class="bracket-col round-' + round.id + '"><div class="bracket-col-title">' + round.title + '</div>' + round.ids.map(id => bracketCard(matchById(id))).join('') + '</div>';
+      }).join('') + championColumn();
+      const champ = state.actuals['103']?.winner;
+      const badge = document.getElementById('championBadge');
+      badge.textContent = champ ? 'Campeón: ' + flag(champ) + ' ' + champ : 'Campeón pendiente';
+      badge.className = 'badge ' + (champ ? 'done' : 'warn');
+    }
+    function bracketCard(m) {
+      const actual = state.actuals[m.id] || {};
+      const h = teamName(m, 'home');
+      const a = teamName(m, 'away');
+      return bracketMatch(m, h, a, actual);
+    }
+    function championColumn() {
+      const final = state.actuals['103'] || {};
+      const champ = final.winner;
+      return '<div class="bracket-col champion-col"><div class="bracket-col-title">Campeón</div><div class="champion"><span class="gray">Trofeo</span><strong>' + (champ ? flag(champ) + ' ' + escapeHtml(champ) : 'Por definir') + '</strong><span class="badge ' + (champ ? 'done' : 'warn') + '">' + (validActual(final) ? final.h + '-' + final.a + ' · ' + methodLabel(final.method) : 'Final pendiente') + '</span></div></div>';
+    }
+    function bracketMatch(m, h, a, actual) {
+      return '<div class="bracket-match">' +
+        '<div class="fixture-head"><span>#' + m.id + '</span><span>' + (m.date || BRACKET_DATES[m.round] || '') + '</span></div>' +
+        bracketSource(m) +
+        bracketTeam(h, actual, 'h') +
+        bracketTeam(a, actual, 'a') +
+        '<div class="bracket-note">' + bracketNote(m, actual) + '</div>' +
+      '</div>';
+    }
+    function bracketSource(m) {
+      if (!m.homeFrom && !m.awayFrom) return '';
+      return '<div class="bracket-source">Vienen de los ganadores #' + m.homeFrom + ' y #' + m.awayFrom + '</div>';
+    }
+    function bracketNote(m, actual) {
+      if (validActual(actual)) return methodLabel(actual.method);
+      return m.time ? m.time + ' COL' : 'Pendiente';
+    }
+    function bracketTeam(team, actual, side) {
+      const knownScore = validActual(actual) ? actual[side] : '';
+      const winner = actual.winner === team;
+      return '<div class="bracket-team ' + (winner ? 'winner' : '') + '"><span>' + flag(team) + ' ' + escapeHtml(team) + '</span><b class="bracket-score">' + (knownScore !== '' && knownScore !== undefined ? knownScore : '') + '</b></div>';
+    }
+    function actualCard(m) {
+      const h = teamName(m, 'home'), a = teamName(m, 'away');
+      const actual = state.actuals[m.id] || {};
+      const known = isKnown(m);
+      const resultText = validActual(actual)
+        ? actual.h + '-' + actual.a + ' · ' + flag(actual.winner) + ' ' + actual.winner + ' · ' + methodLabel(actual.method)
+        : 'Pendiente';
+      const admin = adminUnlocked ? adminResult(m, h, a, actual, known) : '';
+      return '<article class="actual-row ' + (validActual(actual) ? 'done' : '') + '">' +
+        '<div class="fixture-head"><span>#' + m.id + '</span><span>' + (m.date || BRACKET_DATES[m.round] || '') + ' · ' + (m.time || 'Hora por definir') + ' COL</span></div>' +
+        '<div class="teams"><div class="team">' + flag(h) + '<span>' + h + '</span></div><div class="versus">vs</div><div class="team">' + flag(a) + '<span>' + a + '</span></div></div>' +
+        '<div class="meta"><span class="badge">' + (m.venue || 'Sede por definir') + '</span><span class="badge ' + (validActual(actual) ? 'done' : 'warn') + '">' + resultText + '</span></div>' +
+        admin +
+      '</article>';
+    }
+    function bindBetInputs() {
+      document.querySelectorAll('[data-pick-button]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.dataset.pickButton;
+        draft[id] = draft[id] || {};
+        draft[id][btn.dataset.field] = btn.dataset.value;
+        renderBetFixtures();
+      }));
+      document.querySelectorAll('[data-pick]').forEach(el => el.addEventListener('input', () => {
+        const id = el.dataset.pick;
+        draft[id] = draft[id] || {};
+        draft[id][el.dataset.field] = el.type === 'number' && el.value !== '' ? Number(el.value) : el.value;
+      }));
+    }
+    function bindActualInputs() {
+      document.querySelectorAll('[data-actual]').forEach(el => el.addEventListener('change', () => {
+        if (!adminUnlocked) return;
+        const id = el.dataset.actual;
+        state.actuals[id] = state.actuals[id] || {};
+        state.actuals[id][el.dataset.field] = el.type === 'number' && el.value !== '' ? Number(el.value) : el.value;
+        saveState(true);
+        renderActualFixtures();
+        renderBracket();
+        renderRanking();
+      }));
+    }
+    function validPick(pick) {
+      return pick && Number.isFinite(Number(pick.h)) && Number.isFinite(Number(pick.a)) && pick.winner && pick.method;
+    }
+    function validActual(actual) {
+      return actual && Number.isFinite(Number(actual.h)) && Number.isFinite(Number(actual.a)) && actual.winner && actual.method;
+    }
+    function scorePick(pick, actual) {
+      if (!validPick(pick) || !validActual(actual)) return null;
+      let total = 0, parts = { qualifier: 0, score: 0, method: 0 };
+      if (pick.winner === actual.winner) { parts.qualifier = ROUND_POINTS.qualifier; total += parts.qualifier; }
+      if (Number(pick.h) === Number(actual.h) && Number(pick.a) === Number(actual.a)) { parts.score = ROUND_POINTS.score; total += parts.score; }
+      if (pick.winner === actual.winner && pick.method === actual.method) { parts.method = ROUND_POINTS.method; total += parts.method; }
+      return { total, ...parts };
+    }
+    function submissionStats(sub) {
+      let total = 0, qualifier = 0, score = 0, method = 0, pending = 0, missed = 0;
+      Object.entries(sub.picks || {}).forEach(([id, pick]) => {
+        const actual = state.actuals[id];
+        const pts = scorePick(pick, actual);
+        if (!pts) { pending++; return; }
+        total += pts.total;
+        if (pts.qualifier) qualifier++;
+        if (pts.score) score++;
+        if (pts.method) method++;
+        if (!pts.total) missed++;
+      });
+      return { total, qualifier, score, method, pending, missed };
+    }
+    function ranking() {
+      return state.submissions.map(s => ({ ...s, stats: submissionStats(s) })).sort((a,b) =>
+        b.stats.total - a.stats.total || b.stats.qualifier - a.stats.qualifier || b.stats.score - a.stats.score || b.stats.method - a.stats.method || a.name.localeCompare(b.name, 'es')
+      );
+    }
+    function renderRanking() {
+      const rows = ranking();
+      document.getElementById('submissionCount').textContent = rows.length + ' archivos';
+      document.getElementById('rankingBody').innerHTML = rows.length ? rows.map((s,i) =>
+        '<tr class="' + (i === 0 ? 'top' : '') + '"><td><b>' + (i + 1) + '</b></td><td><b>' + escapeHtml(s.name) + '</b><br><small class="gray">' + escapeHtml(s.sourceFile || 'importado') + '</small></td><td>' + roundInfo(s.round).label + '</td><td class="num"><b>' + s.stats.total + '</b></td><td class="num green">' + s.stats.qualifier + '</td><td class="num orange">' + s.stats.score + '</td><td class="num cyan">' + s.stats.method + '</td><td class="num gray">' + s.stats.pending + '</td></tr>'
+      ).join('') : '<tr><td colspan="8" class="gray">Aún no hay apuestas importadas. Cuando cargues los HTML recibidos por WhatsApp, aparecerán aquí.</td></tr>';
+      document.getElementById('ranking').innerHTML = rows.length ? rows.map((s,i) =>
+        '<div class="rank-row"><div class="pos">' + (i + 1) + '</div><div><b>' + escapeHtml(s.name) + '</b><small>' + roundInfo(s.round).label + ' · ' + s.stats.qualifier + ' clasif. · ' + s.stats.score + ' marcadores · ' + s.stats.method + ' formas · ' + s.stats.pending + ' pendientes</small></div><strong>' + s.stats.total + ' pts</strong></div>'
+      ).join('') : '<div class="empty">Aún no hay apuestas importadas.</div>';
+      document.getElementById('submissionList').innerHTML = rows.length ? rows.map(s => '<div class="rank-row"><div class="pos">HTML</div><div><b>' + escapeHtml(s.name) + '</b><small>' + escapeHtml(s.sourceFile || 'importado') + '</small></div><span class="badge done">' + Object.keys(s.picks || {}).length + ' partidos</span></div>').join('') : '<div class="empty">Sin archivos recibidos.</div>';
+    }
+    function renderAdmin() {
+      document.getElementById('adminTools').classList.toggle('unlocked', adminUnlocked);
+      document.querySelectorAll('.admin-only').forEach(el => el.style.display = adminUnlocked ? '' : 'none');
+    }
+    async function downloadSubmission() {
+      const name = document.getElementById('playerName').value.trim();
+      if (!name) { showToast('Escribe el nombre del apostador'); return; }
+      const matches = roundMatches(state.openRound).filter(isKnown);
+      const missing = matches.filter(m => !validPick(draft[m.id]));
+      if (missing.length) { showToast('Faltan ' + missing.length + ' partidos por completar'); return; }
+      const picks = {};
+      matches.forEach(m => { picks[m.id] = draft[m.id]; });
+      const payload = { version: 1, simulatorSubmission: { name, round: state.openRound, picks, exportedAt: new Date().toISOString() } };
+      const html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Apuesta ' + escapeHtml(name) + '</title></head><body><script id="embedded-state" type="application/json">' + JSON.stringify(payload).replace(/</g, '\\u003c') + '<\/script><h1>Apuesta enviada</h1><p>' + escapeHtml(name) + ' · ' + roundInfo(state.openRound).title + '</p></body></html>';
+      const filename = 'apuesta-' + slugify(name) + '-' + state.openRound + '.html';
+      const file = new File([html], filename, { type: 'text/html' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: 'Resultados ' + name, text: whatsappText(name) });
+          showToast('Resultados listos para enviar por WhatsApp.');
+          return;
+        } catch (err) {
+          if (err.name === 'AbortError') { showToast('Envío cancelado'); return; }
+        }
+      }
+      downloadFile(filename, html, 'text/html;charset=utf-8');
+      openWhatsApp(name);
+      showToast('Resultados descargados. Adjunta el archivo en el chat de WhatsApp.');
+    }
+    function whatsappText(name) {
+      return 'Hola, te envío mis resultados de ' + roundInfo(state.openRound).title + ' - ' + name + '.';
+    }
+    function openWhatsApp(name) {
+      const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(whatsappText(name));
+      const opened = window.open(url, '_blank', 'noopener');
+      if (!opened) window.location.href = url;
+    }
+    async function importFiles(files) {
+      if (!adminUnlocked) { showToast('Desbloquea admin primero'); return; }
+      let imported = 0;
+      for (const file of files) {
+        const text = await file.text();
+        const payload = extractPayload(text);
+        const sub = payload?.simulatorSubmission;
+        if (!sub?.name || !sub?.round || !sub?.picks) continue;
+        const clean = { name: sub.name, round: sub.round, picks: sub.picks, sourceFile: file.name, loadedAt: new Date().toISOString() };
+        const idx = state.submissions.findIndex(s => s.name.toLowerCase() === clean.name.toLowerCase() && s.round === clean.round);
+        if (idx >= 0) state.submissions[idx] = clean;
+        else state.submissions.push(clean);
+        imported++;
+      }
+      saveState(true);
+      renderAll();
+      showToast(imported ? imported + ' archivos importados' : 'No encontré apuestas válidas');
+    }
+    function extractPayload(text) {
+      const match = text.match(/<script[^>]+id=["']embedded-state["'][^>]*>([\s\S]*?)<\/script>/i);
+      if (!match) return null;
+      try { return JSON.parse(match[1]); } catch (e) { return null; }
+    }
+    function exportAdminHtml() {
+      if (!adminUnlocked) { showToast('Desbloquea admin primero'); return; }
+      saveState(true);
+      const clone = document.documentElement.cloneNode(true);
+      const tag = clone.querySelector('#embedded-state');
+      if (tag) tag.textContent = JSON.stringify(state).replace(/</g, '\\u003c');
+      ['betRoundTabs','followRoundTabs','betFixtureGrid','bracketGrid','actualGrid','rankingBody','ranking','submissionList'].forEach(id => {
+        const el = clone.querySelector('#' + id);
+        if (el) el.innerHTML = '';
+      });
+      clone.querySelectorAll('input').forEach(input => {
+        if (input.type === 'password' || input.type === 'file') input.setAttribute('value', '');
+        else input.setAttribute('value', input.value || '');
+      });
+      clone.querySelectorAll('select').forEach(select => select.querySelectorAll('option').forEach(option => option.toggleAttribute('selected', option.selected)));
+      clone.querySelector('#adminBox')?.classList.remove('open');
+      clone.querySelector('#adminTools')?.classList.remove('unlocked');
+      clone.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+      downloadFile('simulador-eliminatorias-actualizado.html', '<!DOCTYPE html>\n' + clone.outerHTML, 'text/html;charset=utf-8');
+      showToast('HTML actualizado descargado');
+    }
+    function downloadFile(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    function slugify(text) {
+      return String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'apostador';
+    }
+    function escapeHtml(text) { return String(text ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function escapeAttr(text) { return escapeHtml(text).replace(/"/g,'&quot;'); }
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    document.querySelectorAll('[data-screen]').forEach(btn => btn.addEventListener('click', () => {
+      if (btn.dataset.screen === 'bet') betRound = state.openRound;
+      if (btn.dataset.screen === 'follow') followRound = state.openRound;
+      setScreen(btn.dataset.screen);
+      renderAll();
+    }));
+    document.getElementById('downloadBtn').addEventListener('click', downloadSubmission);
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    document.getElementById('adminToggle').addEventListener('click', () => {
+      setScreen('follow');
+      renderAll();
+      document.getElementById('adminBox').classList.toggle('open');
+    });
+    document.getElementById('unlockBtn').addEventListener('click', () => {
+      if (document.getElementById('adminKey').value === ADMIN_KEY) {
+        adminUnlocked = true;
+        document.getElementById('adminKey').value = '';
+        document.getElementById('adminBox').classList.remove('open');
+        showToast('Admin desbloqueado');
+        renderAll();
+      } else showToast('Clave incorrecta');
+    });
+    document.getElementById('lockBtn').addEventListener('click', () => { adminUnlocked = false; renderAll(); showToast('Admin bloqueado'); });
+    document.getElementById('saveAdminBtn').addEventListener('click', () => { saveState(); renderAll(); });
+    document.getElementById('exportAdminBtn').addEventListener('click', exportAdminHtml);
+    document.getElementById('importFiles').addEventListener('change', e => {
+      importFiles(e.target.files);
+      e.target.value = '';
+    });
+    document.getElementById('openRound').addEventListener('change', e => {
+      state.openRound = e.target.value;
+      betRound = e.target.value;
+      followRound = e.target.value;
+      saveState(true);
+      renderAll();
+      showToast('Ronda abierta: ' + roundInfo(e.target.value).title);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

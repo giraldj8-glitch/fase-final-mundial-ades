@@ -1,0 +1,56 @@
+# Fase Final Mundial ADES
+
+## Archivos
+
+- `index.html`: simulador independiente para 16avos en adelante.
+- El tablero anterior de fase de grupos queda en `../16avos/index.html` como referencia y consulta.
+
+## Flujo de uso
+
+1. El apostador abre `index.html`.
+2. Revisa las reglas visibles en el inicio.
+3. Entra por el botón grande **Agregar apuesta**.
+4. Llena su nombre.
+5. En cada cruce toca el equipo que clasifica, elige cómo clasifica y escribe un solo marcador.
+6. Descarga sus resultados y los envía por WhatsApp. Por dentro sigue siendo un archivo HTML para que el admin lo pueda importar.
+7. Cualquier persona puede entrar por **Seguir resultados** para ver la llave del torneo, la tabla de posiciones y los resultados que el admin va cargando.
+8. El admin desbloquea con clave, importa los HTML recibidos, carga resultados reales y exporta el HTML actualizado.
+9. Cuando termine una ronda, el admin cambia la ronda abierta para que la gente apueste la siguiente.
+
+## Sistema de puntos propuesto
+
+Máximo por partido: 10 puntos.
+
+- 3 puntos: acierta el equipo clasificado.
+- 5 puntos: acierta el marcador exacto. Si la forma fue tiempo reglamentario, el marcador corresponde a los 90 minutos. Si la forma fue prórroga o penales, corresponde al marcador tras 120 minutos, sin contar tiros penales.
+- 2 puntos: acierta la forma de clasificación, entre tiempo reglamentario, prórroga o penales. Estos 2 puntos solo cuentan si también acertó el clasificado.
+
+Motivo: el clasificado es lo más importante, el marcador exacto sigue siendo el logro más difícil, y la forma de clasificación suma un bonus sin pesar tanto como el ganador o el marcador.
+
+## Desempates
+
+1. Más puntos totales.
+2. Más clasificados acertados.
+3. Más marcadores exactos.
+4. Más formas de clasificación acertadas.
+5. Nombre en orden alfabético.
+
+## Cruces y horarios
+
+Los cruces de 16avos se cargaron con hora Colombia. Tomé como base la lista de partidos publicada para la ronda de 32 y convertí los horarios Eastern a Colombia restando una hora.
+
+Fuentes usadas:
+
+- SBNation: `https://www.sbnation.com/soccer/1120771/world-cup-schedule-scores-round-32`
+- FIFA scores/fixtures: `https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures`
+- Knockout stage/formato: `https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage`
+
+## Notas técnicas
+
+- El HTML es autocontenido, sin dependencias externas.
+- Las apuestas descargadas incluyen un `embedded-state` con los picks del apostador.
+- El admin puede importar múltiples HTML a la vez.
+- El botón de envío intenta compartir el archivo desde iPhone/Android usando el menú nativo. Si el navegador no permite adjuntar archivos, descarga el HTML y abre WhatsApp al número `573132776899` con el mensaje listo.
+- Los resultados reales se guardan en el navegador y también quedan embebidos al exportar el HTML actualizado.
+- La tabla de posiciones aparece aunque todavía no haya apuestas importadas, con una fila de estado vacío.
+- La vista de llave usa columnas por ronda y muestra de qué partidos vienen los ganadores; se alimenta de los resultados cargados por el admin y muestra campeón cuando se defina la final.
