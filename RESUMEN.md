@@ -50,6 +50,7 @@ Fuentes usadas:
 
 - El HTML es autocontenido, sin dependencias externas.
 - Las apuestas descargadas muestran una tabla visible con todos los partidos, clasificado, forma y marcador; además incluyen un `embedded-state` con los picks del apostador para que el admin las pueda importar.
+- El formulario de apuesta tiene autoguardado local del nombre y los picks de la ronda en curso, para que no se pierda si recargan o cierran el navegador.
 - El admin puede importar múltiples HTML a la vez.
 - El botón de envío intenta compartir el archivo desde iPhone/Android usando el menú nativo. Si el navegador no permite adjuntar archivos, descarga el HTML y abre WhatsApp al número `573132776899` con el mensaje listo.
 - Los resultados reales se guardan en el navegador y también quedan embebidos al exportar el HTML actualizado.

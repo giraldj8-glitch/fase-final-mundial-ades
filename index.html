@@ -721,6 +721,7 @@
   <script>
     const ADMIN_KEY = 'ades2026';
     const STORAGE_KEY = 'ades_ko_simulator_2026_v1';
+    const DRAFT_KEY = 'ades_ko_bet_draft_2026_v1';
     const WHATSAPP_NUMBER = '573132776899';
     const ROUNDS = [
       { id: 'r32', label: '16avos', title: '16avos de final', ids: ['73','76','74','75','78','77','79','80','82','81','84','83','85','88','86','87'] },
@@ -771,7 +772,8 @@
     let activeScreen = 'home';
     let betRound = state.openRound || 'r32';
     let followRound = state.openRound || 'r32';
-    let draft = {};
+    let savedDraft = loadDraft();
+    let draft = savedDraft.picks || {};
 
     function embeddedState() {
       try { return JSON.parse(document.getElementById('embedded-state').textContent); }
@@ -798,6 +800,19 @@
       state.updatedAt = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       if (!silent) showToast('Guardado');
+    }
+    function loadDraft() {
+      try {
+        const saved = localStorage.getItem(DRAFT_KEY);
+        return saved ? JSON.parse(saved) : { name: '', round: 'r32', picks: {} };
+      } catch (e) {
+        return { name: '', round: 'r32', picks: {} };
+      }
+    }
+    function saveDraft() {
+      const name = document.getElementById('playerName')?.value.trim() || savedDraft.name || '';
+      savedDraft = { name, round: betRound, picks: draft, updatedAt: new Date().toISOString() };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(savedDraft));
     }
     function matchById(id) { return MATCHES.find(m => m.id === String(id)); }
     function roundInfo(id) { return ROUNDS.find(r => r.id === id) || ROUNDS[0]; }
@@ -850,8 +865,9 @@
     function renderBetFixtures() {
       const info = roundInfo(betRound);
       const open = state.openRound === betRound;
+      restoreDraftForRound();
       document.getElementById('betRoundTitle').textContent = info.title;
-      document.getElementById('betRoundHint').textContent = open ? 'Esta es la ronda habilitada para descargar apuestas.' : 'Esta ronda está cerrada para descargar; puedes verla como referencia.';
+      document.getElementById('betRoundHint').textContent = open ? 'Esta es la ronda habilitada para descargar apuestas. Autoguardado activo en este navegador.' : 'Esta ronda está cerrada para descargar; puedes verla como referencia.';
       document.getElementById('betOpenRoundBadge').textContent = open ? 'Ronda abierta' : 'Consulta';
       document.getElementById('betOpenRoundBadge').className = 'badge ' + (open ? 'done' : 'warn');
       document.getElementById('betFixtureGrid').innerHTML = roundMatches(betRound).map(m => betFixtureCard(m, open)).join('');
@@ -993,17 +1009,25 @@
       '</article>';
     }
     function bindBetInputs() {
+      document.getElementById('playerName').oninput = saveDraft;
       document.querySelectorAll('[data-pick-button]').forEach(btn => btn.addEventListener('click', () => {
         const id = btn.dataset.pickButton;
         draft[id] = draft[id] || {};
         draft[id][btn.dataset.field] = btn.dataset.value;
+        saveDraft();
         renderBetFixtures();
       }));
       document.querySelectorAll('[data-pick]').forEach(el => el.addEventListener('input', () => {
         const id = el.dataset.pick;
         draft[id] = draft[id] || {};
         draft[id][el.dataset.field] = el.type === 'number' && el.value !== '' ? Number(el.value) : el.value;
+        saveDraft();
       }));
+    }
+    function restoreDraftForRound() {
+      const input = document.getElementById('playerName');
+      if (savedDraft.name && !input.value) input.value = savedDraft.name;
+      if (savedDraft.round === betRound) draft = savedDraft.picks || {};
     }
     function bindActualInputs() {
       document.querySelectorAll('[data-actual]').forEach(el => el.addEventListener('change', () => {
