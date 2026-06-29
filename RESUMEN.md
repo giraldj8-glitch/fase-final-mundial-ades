@@ -56,4 +56,6 @@ Fuentes usadas:
 - Los resultados reales se guardan en el navegador y también quedan embebidos al exportar el HTML actualizado.
 - La tabla de posiciones aparece aunque todavía no haya apuestas importadas, con una fila de estado vacío.
 - La vista de llave usa columnas por ronda y muestra de qué partidos vienen los ganadores; se alimenta de los resultados cargados por el admin y muestra campeón cuando se defina la final.
-- Estado actual: 12 apuestas de 16avos importadas en `index.html`; todas tienen 16 partidos pendientes de marcador real.
+- Estado actual: 13 apuestas de 16avos importadas en `index.html`; todas tienen 16 partidos pendientes de marcador real.
+- Laura G fue cargada desde `Fase Final Mundial ADES.pdf`; el cruce #73 quedó como Sudáfrica 0 - Canadá 1 y el #76 como Brasil 2 - Japón 1.
+- La tabla permite abrir el detalle de cada participante y ver su marca de envío, archivo origen y picks completos.
