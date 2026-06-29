@@ -59,4 +59,6 @@ Fuentes usadas:
 - La pantalla principal incluye buscador, accesos rápidos desplazables arriba, panel admin visible, tabla, detalle por participante y últimos puntos por partido cargado.
 - Estado actual: 12 participantes reales de 16avos importados en `index.html`; `Andres G` quedó consolidado/oculto por duplicado con `Alberto Gamba`.
 - Laura G fue cargada desde `Fase Final Mundial ADES.pdf`; el cruce #73 quedó como Sudáfrica 0 - Canadá 0, Canadá por penales, y el #76 como Brasil 2 - Japón 1.
+- Resultados reales cargados: Canadá venció 1-0 a Sudáfrica en tiempo reglamentario y Brasil venció 2-1 a Japón en tiempo reglamentario.
+- El panel admin ahora recalcula tabla, llave, últimos puntos y detalle apenas se cambian campos de resultados; además un resultado oficial completo ya no queda tapado por intentos locales incompletos guardados en el navegador.
 - La tabla permite abrir el detalle de cada participante y ver su marca de envío, archivo origen y picks completos.
