@@ -52,7 +52,7 @@
       top: 0;
       z-index: 20;
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto;
+      grid-template-columns: minmax(220px, .7fr) minmax(0, 1.3fr);
       gap: 12px;
       align-items: center;
       margin: 0 -16px 16px;
@@ -79,7 +79,26 @@
     h1, h2, h3, h4, p { margin-top: 0; }
     .brand h1 { margin: 0; font-size: 1.02rem; line-height: 1.1; }
     .brand p { margin: 2px 0 0; color: var(--muted); font-size: .78rem; }
-    .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: end; }
+    .topbar-tools { display: grid; gap: 8px; min-width: 0; }
+    .searchbar {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) auto;
+      gap: 8px;
+      min-width: 0;
+    }
+    .searchbar input { min-height: 38px; }
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: nowrap;
+      justify-content: start;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .actions .btn { flex: 0 0 auto; min-height: 38px; }
 
     .btn {
       min-height: 42px;
@@ -383,8 +402,9 @@
     .badge.done { color: var(--green); border-color: rgba(50,216,148,.36); background: rgba(50,216,148,.12); }
     .badge.warn { color: var(--orange); border-color: rgba(255,180,67,.34); background: rgba(255,180,67,.12); }
 
+    .admin-panel, .recent-panel { margin-bottom: 16px; }
     .admin-box {
-      display: none;
+      display: grid;
       gap: 10px;
       margin-top: 12px;
       padding-top: 12px;
@@ -463,6 +483,22 @@
       letter-spacing: .04em;
     }
     .quick-card b { display: block; margin-top: 3px; font-size: 1.25rem; }
+    .recent-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .recent-card {
+      display: grid;
+      gap: 7px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      min-width: 0;
+    }
+    .recent-card strong { overflow-wrap: anywhere; }
+    .recent-card small { color: var(--gray); }
     .detail-btn {
       min-height: 30px;
       padding: 4px 9px;
@@ -588,7 +624,7 @@
     .toast.show { transform: translate(-50%, 0); }
 
     @media (max-width: 980px) {
-      .topbar, .hero, .layout, .fixture-grid, .formbar, .home-actions, .quick-steps, .quick-overview { grid-template-columns: 1fr; }
+      .topbar, .hero, .layout, .fixture-grid, .formbar, .home-actions, .quick-steps, .quick-overview, .recent-strip { grid-template-columns: 1fr; }
       .actions { justify-content: start; }
     }
     @media (max-width: 680px) {
@@ -600,7 +636,7 @@
   </style>
 </head>
 <body>
-  <script id="embedded-state" type="application/json">{"version":1,"submissions":[{"name":"Alberto Gamba","round":"r32","picks":{"73":{"winner":"Sudáfrica","method":"regulation","h":2,"a":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"penalties","h":0,"a":0},"79":{"winner":"Ecuador","method":"penalties","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Bélgica","method":"penalties","h":2,"a":2},"83":{"winner":"Portugal","method":"penalties","h":1,"a":1},"84":{"winner":"España","method":"regulation","h":3,"a":1},"85":{"winner":"Suiza","method":"regulation","h":1,"a":0},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Australia","method":"regulation","h":1,"a":0}},"sourceFile":"apuesta-alberto-gamba-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T12:52:25.780Z"},{"name":"Andres G","round":"r32","picks":{"73":{"method":"regulation","h":1,"a":3,"winner":"Canadá"},"74":{"winner":"Alemania","method":"regulation","h":4,"a":1},"75":{"winner":"Países Bajos","method":"penalties","h":2,"a":2},"76":{"winner":"Brasil","method":"extra","h":3,"a":1},"77":{"winner":"Francia","method":"regulation","h":4,"a":1},"78":{"winner":"Costa de Marfil","method":"extra","h":2,"a":1},"79":{"winner":"Ecuador","method":"regulation","h":1,"a":2},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Bélgica","method":"regulation","h":3,"a":1},"83":{"winner":"Croacia","method":"penalties","h":2,"a":2},"84":{"winner":"España","method":"regulation","h":3,"a":1},"85":{"winner":"Suiza","method":"extra","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":3,"a":1},"88":{"winner":"Australia","method":"penalties","h":1,"a":1}},"sourceFile":"apuesta-andres-g-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T13:02:47.621Z"},{"name":"Andrés Parra","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":0,"a":2},"79":{"winner":"Ecuador","method":"extra","h":1,"a":2},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Senegal","method":"extra","h":1,"a":2},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":1},"85":{"winner":"Suiza","method":"extra","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"extra","h":0,"a":1}},"sourceFile":"apuesta-andres-parra-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:24:21.002Z"},{"name":"Andrés vivas","round":"r32","picks":{"73":{"winner":"Sudáfrica","method":"regulation","h":0,"a":1},"74":{"winner":"Alemania","method":"extra","h":3,"a":2},"75":{"winner":"Países Bajos","method":"penalties","h":2,"a":2},"76":{"winner":"Japón","method":"regulation","h":1,"a":2},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":2,"a":3},"79":{"winner":"México","method":"regulation","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"penalties","h":1,"a":1},"82":{"winner":"Bélgica","method":"extra","h":3,"a":2},"83":{"winner":"Portugal","method":"penalties","h":2,"a":2},"84":{"winner":"Austria","method":"regulation","h":1,"a":2},"85":{"winner":"Suiza","method":"regulation","h":3,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":1},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"penalties","h":1,"a":1}},"sourceFile":"apuesta-andres-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:28:07.212Z"},{"name":"Carlos Fernando Corredor Palacios","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":3},"74":{"winner":"Alemania","method":"regulation","h":3,"a":0},"75":{"winner":"Marruecos","method":"penalties","h":5,"a":3},"76":{"winner":"Brasil","method":"extra","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Noruega","method":"regulation","h":2,"a":0},"79":{"winner":"México","method":"extra","h":2,"a":1},"80":{"winner":"Inglaterra","method":"extra","h":2,"a":0},"81":{"winner":"Estados Unidos","h":2,"a":1,"method":"regulation"},"82":{"winner":"Bélgica","method":"regulation","h":2,"a":1},"83":{"winner":"Croacia","method":"extra","h":2,"a":1},"84":{"h":2,"a":1,"winner":"España","method":"regulation"},"85":{"winner":"Suiza","h":2,"a":0,"method":"regulation"},"86":{"winner":"Argentina","method":"penalties","h":5,"a":3},"87":{"winner":"Colombia","method":"regulation","h":3,"a":1},"88":{"method":"regulation","winner":"Australia","h":2,"a":1}},"sourceFile":"apuesta-carlos-fernando-corredor-palacios-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:27:33.649Z"},{"name":"Cristian Avila","round":"r32","picks":{"73":{"winner":"Canadá","h":0,"a":2,"method":"regulation"},"74":{"winner":"Alemania","method":"regulation","h":3,"a":0},"75":{"winner":"Países Bajos","method":"regulation","h":1,"a":0},"76":{"winner":"Japón","method":"extra","h":0,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":0},"78":{"winner":"Noruega","method":"regulation","h":1,"a":2},"79":{"winner":"México","method":"regulation","h":2,"a":1},"80":{"winner":"Inglaterra","h":3,"a":0,"method":"regulation"},"81":{"winner":"Estados Unidos","h":2,"a":1,"method":"regulation"},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"83":{"winner":"Portugal","method":"extra","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":1,"a":0},"88":{"winner":"Egipto","h":0,"a":1,"method":"regulation"}},"sourceFile":"apuesta-cristian-avila-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-28T19:05:07.824Z"},{"name":"Daniela Vivas","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"method":"penalties","h":1,"a":1,"winner":"Países Bajos"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Noruega","method":"regulation","h":1,"a":2},"79":{"winner":"México","method":"extra","h":1,"a":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Bélgica","method":"regulation","h":2,"a":1},"83":{"winner":"Portugal","method":"extra","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","h":2,"a":1,"method":"regulation"},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"method":"penalties","winner":"Egipto","h":0,"a":0}},"sourceFile":"apuesta-daniela-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T13:13:36.402Z"},{"name":"Luisa Pulido","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","a":2,"h":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Marruecos","a":1,"h":0,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":0},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"method":"regulation","a":1,"h":0,"winner":"Noruega"},"79":{"winner":"Ecuador","method":"regulation","a":1,"h":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"83":{"winner":"Portugal","method":"regulation","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","h":1,"a":0},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":1,"a":0},"88":{"method":"regulation","winner":"Egipto","h":0,"a":1}},"sourceFile":"apuesta-luisa-pulido-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:31:11.268Z"},{"name":"Mireya","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":4,"a":1},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"extra","h":3,"a":2},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":1,"a":3},"79":{"winner":"Ecuador","method":"extra","h":2,"a":3},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Senegal","method":"penalties","h":1,"a":1},"83":{"method":"regulation","winner":"Portugal","h":1,"a":0},"84":{"winner":"España","method":"extra","h":3,"a":2},"85":{"winner":"Argelia","method":"extra","h":2,"a":3},"86":{"method":"extra","winner":"Argentina","h":3,"a":2},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"extra","h":1,"a":2}},"sourceFile":"apuesta-mireya-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:03:21.620Z"},{"name":"Nelson Rodríguez","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","h":3,"a":1,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":3,"a":1},"77":{"winner":"Francia","method":"regulation","a":1,"h":4},"78":{"winner":"Noruega","h":1,"a":2,"method":"regulation"},"79":{"winner":"Ecuador","method":"regulation","a":2,"h":1},"80":{"winner":"Inglaterra","method":"regulation","h":3,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":3,"a":0},"82":{"winner":"Bélgica","method":"penalties","h":1,"a":1},"83":{"winner":"Portugal","method":"regulation","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":3,"a":0},"85":{"winner":"Suiza","h":3,"a":2,"method":"regulation"},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","h":2,"a":0,"method":"regulation"},"88":{"winner":"Egipto","method":"penalties","h":2,"a":2}},"sourceFile":"apuesta-nelson-rodriguez-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T15:53:52.521Z"},{"name":"Paula Vivas","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":4,"a":2},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":3,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":1},"78":{"winner":"Noruega","method":"regulation","h":5,"a":1},"79":{"winner":"México","method":"regulation","h":2,"a":0},"80":{"winner":"Inglaterra","method":"regulation","h":3,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Senegal","method":"penalties","h":2,"a":2},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":2},"85":{"winner":"Suiza","method":"extra","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"regulation","h":0,"a":2}},"sourceFile":"apuesta-paula-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:02:38.217Z"},{"name":"Santiago Giraldo","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":3},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Marruecos","a":2,"h":1,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Costa de Marfil","method":"regulation","h":2,"a":1},"79":{"winner":"Ecuador","method":"regulation","a":1,"h":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"method":"regulation","winner":"Bélgica","h":1,"a":0},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","a":0,"h":1},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":0},"88":{"winner":"Egipto","method":"regulation","a":1,"h":0}},"sourceFile":"apuesta-santiago-giraldo-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:18:15.513Z"},{"name":"Laura G","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":0,"a":1},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":1},"75":{"winner":"Países Bajos","method":"penalties","h":1,"a":1},"78":{"winner":"Noruega","method":"regulation","h":1,"a":3},"77":{"winner":"Francia","method":"regulation","h":3,"a":0},"79":{"winner":"México","method":"extra","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":4,"a":0},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":1},"83":{"winner":"Croacia","method":"extra","h":1,"a":2},"85":{"winner":"Suiza","method":"penalties","h":1,"a":1},"88":{"winner":"Australia","method":"regulation","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":1},"87":{"winner":"Colombia","method":"extra","h":2,"a":1}},"sourceFile":"Fase Final Mundial ADES.pdf","submittedAt":"2026-06-29T08:04:19-05:00","loadedAt":"2026-06-29T15:35:51-05:00"}],"actuals":{},"openRound":"r32","updatedAt":"2026-06-29T15:35:51-05:00"}</script>
+  <script id="embedded-state" type="application/json">{"version":1,"submissions":[{"name":"Alberto Gamba","round":"r32","picks":{"73":{"winner":"Sudáfrica","method":"regulation","h":2,"a":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"penalties","h":0,"a":0},"79":{"winner":"Ecuador","method":"penalties","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Bélgica","method":"penalties","h":2,"a":2},"83":{"winner":"Portugal","method":"penalties","h":1,"a":1},"84":{"winner":"España","method":"regulation","h":3,"a":1},"85":{"winner":"Suiza","method":"regulation","h":1,"a":0},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Australia","method":"regulation","h":1,"a":0}},"sourceFile":"apuesta-alberto-gamba-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T12:52:25.780Z"},{"name":"Andrés Parra","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":0,"a":2},"79":{"winner":"Ecuador","method":"extra","h":1,"a":2},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Senegal","method":"extra","h":1,"a":2},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":1},"85":{"winner":"Suiza","method":"extra","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"extra","h":0,"a":1}},"sourceFile":"apuesta-andres-parra-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:24:21.002Z"},{"name":"Andrés vivas","round":"r32","picks":{"73":{"winner":"Sudáfrica","method":"regulation","h":0,"a":1},"74":{"winner":"Alemania","method":"extra","h":3,"a":2},"75":{"winner":"Países Bajos","method":"penalties","h":2,"a":2},"76":{"winner":"Japón","method":"regulation","h":1,"a":2},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":2,"a":3},"79":{"winner":"México","method":"regulation","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"penalties","h":1,"a":1},"82":{"winner":"Bélgica","method":"extra","h":3,"a":2},"83":{"winner":"Portugal","method":"penalties","h":2,"a":2},"84":{"winner":"Austria","method":"regulation","h":1,"a":2},"85":{"winner":"Suiza","method":"regulation","h":3,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":1},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"penalties","h":1,"a":1}},"sourceFile":"apuesta-andres-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:28:07.212Z"},{"name":"Carlos Fernando Corredor Palacios","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":3},"74":{"winner":"Alemania","method":"regulation","h":3,"a":0},"75":{"winner":"Marruecos","method":"penalties","h":5,"a":3},"76":{"winner":"Brasil","method":"extra","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Noruega","method":"regulation","h":2,"a":0},"79":{"winner":"México","method":"extra","h":2,"a":1},"80":{"winner":"Inglaterra","method":"extra","h":2,"a":0},"81":{"winner":"Estados Unidos","h":2,"a":1,"method":"regulation"},"82":{"winner":"Bélgica","method":"regulation","h":2,"a":1},"83":{"winner":"Croacia","method":"extra","h":2,"a":1},"84":{"h":2,"a":1,"winner":"España","method":"regulation"},"85":{"winner":"Suiza","h":2,"a":0,"method":"regulation"},"86":{"winner":"Argentina","method":"penalties","h":5,"a":3},"87":{"winner":"Colombia","method":"regulation","h":3,"a":1},"88":{"method":"regulation","winner":"Australia","h":2,"a":1}},"sourceFile":"apuesta-carlos-fernando-corredor-palacios-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:27:33.649Z"},{"name":"Cristian Avila","round":"r32","picks":{"73":{"winner":"Canadá","h":0,"a":2,"method":"regulation"},"74":{"winner":"Alemania","method":"regulation","h":3,"a":0},"75":{"winner":"Países Bajos","method":"regulation","h":1,"a":0},"76":{"winner":"Japón","method":"extra","h":0,"a":1},"77":{"winner":"Francia","method":"regulation","h":3,"a":0},"78":{"winner":"Noruega","method":"regulation","h":1,"a":2},"79":{"winner":"México","method":"regulation","h":2,"a":1},"80":{"winner":"Inglaterra","h":3,"a":0,"method":"regulation"},"81":{"winner":"Estados Unidos","h":2,"a":1,"method":"regulation"},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"83":{"winner":"Portugal","method":"extra","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":1,"a":0},"88":{"winner":"Egipto","h":0,"a":1,"method":"regulation"}},"sourceFile":"apuesta-cristian-avila-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-28T19:05:07.824Z"},{"name":"Daniela Vivas","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"method":"penalties","h":1,"a":1,"winner":"Países Bajos"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Noruega","method":"regulation","h":1,"a":2},"79":{"winner":"México","method":"extra","h":1,"a":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Bélgica","method":"regulation","h":2,"a":1},"83":{"winner":"Portugal","method":"extra","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","h":2,"a":1,"method":"regulation"},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"method":"penalties","winner":"Egipto","h":0,"a":0}},"sourceFile":"apuesta-daniela-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T13:13:36.402Z"},{"name":"Luisa Pulido","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","a":2,"h":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Marruecos","a":1,"h":0,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":0},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"method":"regulation","a":1,"h":0,"winner":"Noruega"},"79":{"winner":"Ecuador","method":"regulation","a":1,"h":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"83":{"winner":"Portugal","method":"regulation","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","h":1,"a":0},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":1,"a":0},"88":{"method":"regulation","winner":"Egipto","h":0,"a":1}},"sourceFile":"apuesta-luisa-pulido-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:31:11.268Z"},{"name":"Mireya","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":4,"a":1},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"extra","h":3,"a":2},"77":{"winner":"Francia","method":"regulation","h":3,"a":1},"78":{"winner":"Noruega","method":"regulation","h":1,"a":3},"79":{"winner":"Ecuador","method":"extra","h":2,"a":3},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Senegal","method":"penalties","h":1,"a":1},"83":{"method":"regulation","winner":"Portugal","h":1,"a":0},"84":{"winner":"España","method":"extra","h":3,"a":2},"85":{"winner":"Argelia","method":"extra","h":2,"a":3},"86":{"method":"extra","winner":"Argentina","h":3,"a":2},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"extra","h":1,"a":2}},"sourceFile":"apuesta-mireya-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:03:21.620Z"},{"name":"Nelson Rodríguez","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Países Bajos","h":3,"a":1,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":3,"a":1},"77":{"winner":"Francia","method":"regulation","a":1,"h":4},"78":{"winner":"Noruega","h":1,"a":2,"method":"regulation"},"79":{"winner":"Ecuador","method":"regulation","a":2,"h":1},"80":{"winner":"Inglaterra","method":"regulation","h":3,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":3,"a":0},"82":{"winner":"Bélgica","method":"penalties","h":1,"a":1},"83":{"winner":"Portugal","method":"regulation","h":2,"a":1},"84":{"winner":"España","method":"regulation","h":3,"a":0},"85":{"winner":"Suiza","h":3,"a":2,"method":"regulation"},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","h":2,"a":0,"method":"regulation"},"88":{"winner":"Egipto","method":"penalties","h":2,"a":2}},"sourceFile":"apuesta-nelson-rodriguez-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T15:53:52.521Z"},{"name":"Paula Vivas","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":2},"74":{"winner":"Alemania","method":"regulation","h":4,"a":2},"75":{"winner":"Países Bajos","method":"extra","h":2,"a":1},"76":{"winner":"Brasil","method":"regulation","h":3,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":1},"78":{"winner":"Noruega","method":"regulation","h":5,"a":1},"79":{"winner":"México","method":"regulation","h":2,"a":0},"80":{"winner":"Inglaterra","method":"regulation","h":3,"a":1},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":1},"82":{"winner":"Senegal","method":"penalties","h":2,"a":2},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":2},"85":{"winner":"Suiza","method":"extra","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":1},"88":{"winner":"Egipto","method":"regulation","h":0,"a":2}},"sourceFile":"apuesta-paula-vivas-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T17:02:38.217Z"},{"name":"Santiago Giraldo","round":"r32","picks":{"73":{"winner":"Canadá","method":"regulation","h":1,"a":3},"74":{"winner":"Alemania","method":"regulation","h":2,"a":0},"75":{"winner":"Marruecos","a":2,"h":1,"method":"regulation"},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"77":{"winner":"Francia","method":"regulation","h":2,"a":0},"78":{"winner":"Costa de Marfil","method":"regulation","h":2,"a":1},"79":{"winner":"Ecuador","method":"regulation","a":1,"h":0},"80":{"winner":"Inglaterra","method":"regulation","h":2,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"82":{"method":"regulation","winner":"Bélgica","h":1,"a":0},"83":{"winner":"Portugal","method":"regulation","h":1,"a":0},"84":{"winner":"España","method":"regulation","h":2,"a":0},"85":{"winner":"Suiza","method":"regulation","a":0,"h":1},"86":{"winner":"Argentina","method":"regulation","h":2,"a":0},"87":{"winner":"Colombia","method":"regulation","h":2,"a":0},"88":{"winner":"Egipto","method":"regulation","a":1,"h":0}},"sourceFile":"apuesta-santiago-giraldo-r32.html","loadedAt":"2026-06-29T15:23:08-05:00","submittedAt":"2026-06-29T14:18:15.513Z"},{"name":"Laura G","round":"r32","picks":{"73":{"winner":"Canadá","method":"penalties","h":0,"a":0},"76":{"winner":"Brasil","method":"regulation","h":2,"a":1},"74":{"winner":"Alemania","method":"regulation","h":2,"a":1},"75":{"winner":"Países Bajos","method":"penalties","h":1,"a":1},"78":{"winner":"Noruega","method":"regulation","h":1,"a":3},"77":{"winner":"Francia","method":"regulation","h":3,"a":0},"79":{"winner":"México","method":"extra","h":2,"a":1},"80":{"winner":"Inglaterra","method":"regulation","h":4,"a":0},"82":{"winner":"Bélgica","method":"regulation","h":1,"a":0},"81":{"winner":"Estados Unidos","method":"regulation","h":2,"a":0},"84":{"winner":"España","method":"regulation","h":3,"a":1},"83":{"winner":"Croacia","method":"extra","h":1,"a":2},"85":{"winner":"Suiza","method":"penalties","h":1,"a":1},"88":{"winner":"Australia","method":"regulation","h":2,"a":1},"86":{"winner":"Argentina","method":"regulation","h":3,"a":1},"87":{"winner":"Colombia","method":"extra","h":2,"a":1}},"sourceFile":"Fase Final Mundial ADES.pdf","submittedAt":"2026-06-29T08:04:19-05:00","loadedAt":"2026-06-29T15:35:51-05:00"}],"actuals":{},"openRound":"r32","updatedAt":"2026-06-29T21:32:12.536713+00:00"}</script>
   <div class="app">
     <header class="topbar">
       <div class="brand">
@@ -610,12 +646,22 @@
           <p>16avos en adelante · hora Colombia · descarga tus resultados para WhatsApp</p>
         </div>
       </div>
-      <div class="actions">
-        <button class="btn" data-screen="home" type="button">Inicio</button>
-        <button class="btn primary" data-screen="bet" type="button">Agregar apuesta</button>
-        <button class="btn success" data-screen="follow" type="button">Seguir resultados</button>
-        <button class="btn" id="printBtn" type="button">Imprimir</button>
-        <button class="btn warn" id="adminToggle" type="button">Admin</button>
+      <div class="topbar-tools">
+        <div class="searchbar">
+          <input id="globalSearch" type="search" placeholder="Buscar persona, equipo o partido" list="globalSearchOptions">
+          <datalist id="globalSearchOptions"></datalist>
+          <button class="btn" id="globalSearchBtn" type="button">Buscar</button>
+        </div>
+        <div class="actions">
+          <button class="btn" data-screen="home" type="button">Inicio</button>
+          <button class="btn primary" data-screen="bet" type="button">Agregar apuesta</button>
+          <button class="btn success" data-screen="follow" type="button">Seguir resultados</button>
+          <button class="btn" data-scroll-target="bracketPanel" type="button">Llave</button>
+          <button class="btn" data-scroll-target="rankingPanel" type="button">Tabla</button>
+          <button class="btn" data-scroll-target="recentPanel" type="button">Últimos puntos</button>
+          <button class="btn" id="printBtn" type="button">Imprimir</button>
+          <button class="btn warn" id="adminToggle" type="button">Admin</button>
+        </div>
       </div>
     </header>
 
@@ -685,7 +731,47 @@
     <section class="screen" id="screen-follow">
       <div class="tabs" id="followRoundTabs"></div>
       <div class="quick-overview" id="quickOverview"></div>
-      <div class="panel bracket-panel">
+      <div class="panel admin-panel" id="adminPanel">
+        <div class="section-head">
+          <div>
+            <h3>Panel admin</h3>
+            <p>Desbloquea para cargar resultados reales, importar HTML recibidos y exportar el tablero actualizado.</p>
+          </div>
+          <span class="badge warn" id="adminStatus">Admin bloqueado</span>
+        </div>
+        <div class="admin-box" id="adminBox">
+          <div class="field">
+            <label for="adminKey">Clave admin</label>
+            <input id="adminKey" type="password" placeholder="Clave">
+          </div>
+          <button class="btn primary" id="unlockBtn" type="button">Desbloquear</button>
+        </div>
+
+        <div class="admin-tools" id="adminTools">
+          <div class="field">
+            <label for="openRound">Ronda que pueden descargar</label>
+            <select id="openRound"></select>
+          </div>
+          <div class="field">
+            <label for="importFiles">Importar HTML recibidos</label>
+            <input id="importFiles" type="file" accept=".html,text/html" multiple>
+          </div>
+          <button class="btn success" id="saveAdminBtn" type="button">Guardar resultados</button>
+          <button class="btn primary" id="exportAdminBtn" type="button">Exportar HTML actualizado</button>
+          <button class="btn" id="lockBtn" type="button">Bloquear admin</button>
+          <div class="submission-list" id="submissionList"></div>
+        </div>
+      </div>
+      <div class="panel recent-panel" id="recentPanel">
+        <div class="section-head">
+          <div>
+            <h3>Últimos puntos</h3>
+            <p>Resumen de los últimos 3 partidos con resultado real cargado.</p>
+          </div>
+        </div>
+        <div class="recent-strip" id="recentPoints"></div>
+      </div>
+      <div class="panel bracket-panel" id="bracketPanel">
         <div class="section-head">
           <div>
             <h3>Llave del torneo</h3>
@@ -709,7 +795,7 @@
         <div class="actual-list" id="actualGrid"></div>
       </main>
 
-      <aside class="panel">
+      <aside class="panel" id="rankingPanel">
         <div class="section-head">
           <div>
             <h3>Tabla de posiciones</h3>
@@ -736,29 +822,6 @@
         </div>
         <div id="ranking" class="rank-list"></div>
         <div class="submission-detail" id="submissionDetail"></div>
-
-        <div class="admin-box" id="adminBox">
-          <div class="field">
-            <label for="adminKey">Clave admin</label>
-            <input id="adminKey" type="password" placeholder="Clave">
-          </div>
-          <button class="btn primary" id="unlockBtn" type="button">Desbloquear</button>
-        </div>
-
-        <div class="admin-tools" id="adminTools">
-          <div class="field">
-            <label for="openRound">Ronda que pueden descargar</label>
-            <select id="openRound"></select>
-          </div>
-          <div class="field">
-            <label for="importFiles">Importar HTML recibidos</label>
-            <input id="importFiles" type="file" accept=".html,text/html" multiple>
-          </div>
-          <button class="btn success" id="saveAdminBtn" type="button">Guardar resultados</button>
-          <button class="btn primary" id="exportAdminBtn" type="button">Exportar HTML actualizado</button>
-          <button class="btn" id="lockBtn" type="button">Bloquear admin</button>
-          <div class="submission-list" id="submissionList"></div>
-        </div>
       </aside>
       </div>
     </section>
@@ -770,6 +833,7 @@
     const STORAGE_KEY = 'ades_ko_simulator_2026_v1';
     const DRAFT_KEY = 'ades_ko_bet_draft_2026_v1';
     const WHATSAPP_NUMBER = '573132776899';
+    const HIDDEN_SUBMISSION_KEYS = new Set(['andres g|r32']);
     const ROUNDS = [
       { id: 'r32', label: '16avos', title: '16avos de final', ids: ['73','76','74','75','78','77','79','80','82','81','84','83','85','88','86','87'] },
       { id: 'r16', label: 'Octavos', title: 'Octavos de final', ids: ['89','90','91','92','93','94','95','96'] },
@@ -838,7 +902,7 @@
     function normalizeState(value, base) {
       return {
         version: 1,
-        submissions: mergeSubmissions(base.submissions || [], value.submissions || []),
+        submissions: fixKnownSubmissions(mergeSubmissions(base.submissions || [], value.submissions || [])),
         actuals: { ...(base.actuals || {}), ...(value.actuals || {}) },
         openRound: value.openRound || base.openRound || 'r32',
         updatedAt: value.updatedAt || base.updatedAt || new Date().toISOString()
@@ -848,7 +912,8 @@
       const map = new Map();
       [...base, ...saved].forEach(sub => {
         if (!sub?.name || !sub?.round) return;
-        const key = sub.name.toLowerCase() + '|' + sub.round;
+        const key = submissionKey(sub);
+        if (HIDDEN_SUBMISSION_KEYS.has(key)) return;
         const prev = map.get(key) || {};
         map.set(key, {
           ...prev,
@@ -859,6 +924,16 @@
         });
       });
       return [...map.values()];
+    }
+    function fixKnownSubmissions(submissions) {
+      return submissions.map(sub => {
+        if (submissionKey(sub) !== 'laura g|r32') return sub;
+        // ponytail: one corrected PDF pick; remove this if a fresh Laura HTML is imported.
+        return { ...sub, picks: { ...(sub.picks || {}), 73: { winner: 'Canadá', method: 'penalties', h: 0, a: 0 } } };
+      });
+    }
+    function submissionKey(sub) {
+      return normalizeText(sub.name) + '|' + sub.round;
     }
     function saveState(silent=false) {
       state.updatedAt = new Date().toISOString();
@@ -907,8 +982,10 @@
       renderActualFixtures();
       renderBracket();
       renderQuickOverview();
+      renderRecentPoints();
       renderRanking();
       renderAdmin();
+      renderGlobalSearchOptions();
     }
     function setScreen(name) {
       activeScreen = name;
@@ -1101,9 +1178,7 @@
         state.actuals[id] = state.actuals[id] || {};
         state.actuals[id][el.dataset.field] = el.type === 'number' && el.value !== '' ? Number(el.value) : el.value;
         saveState(true);
-        renderActualFixtures();
-        renderBracket();
-        renderRanking();
+        renderAll();
       }));
     }
     function validPick(pick) {
@@ -1151,6 +1226,26 @@
         ['Líder actual', leader ? leader.name : 'Sin datos', leader ? leader.stats.total + ' pts' : '0 pts']
       ].map(card => '<div class="quick-card"><small>' + card[0] + '</small><b>' + card[1] + '</b><span class="gray">' + card[2] + '</span></div>').join('');
     }
+    function renderRecentPoints() {
+      const matches = roundMatches(followRound).filter(m => validActual(state.actuals[m.id])).slice(-3).reverse();
+      const box = document.getElementById('recentPoints');
+      if (!matches.length) {
+        box.innerHTML = '<div class="empty">Aún no hay puntos ganados. Cuando cargues resultados reales, aparecerán aquí los últimos 3 partidos.</div>';
+        return;
+      }
+      const rows = ranking();
+      box.innerHTML = matches.map(m => {
+        const actual = state.actuals[m.id];
+        const scored = rows.map(sub => ({ name: sub.name, pts: scorePick(sub.picks?.[m.id], actual) }))
+          .filter(row => row.pts && row.pts.total > 0)
+          .sort((a,b) => b.pts.total - a.pts.total || a.name.localeCompare(b.name, 'es'))
+          .slice(0, 3);
+        const winners = scored.length
+          ? scored.map(row => '<span class="badge done">' + escapeHtml(row.name) + ' · ' + row.pts.total + ' pts</span>').join(' ')
+          : '<span class="badge warn">Nadie sumó puntos</span>';
+        return '<div class="recent-card"><small>#' + m.id + ' · ' + methodLabel(actual.method) + '</small><strong>' + flag(teamName(m, 'home')) + ' ' + escapeHtml(teamName(m, 'home')) + ' ' + actual.h + '-' + actual.a + ' ' + flag(teamName(m, 'away')) + ' ' + escapeHtml(teamName(m, 'away')) + '</strong><div class="meta">' + winners + '</div></div>';
+      }).join('');
+    }
     function renderRanking() {
       const rows = ranking();
       if (!selectedSubmission && rows.length) selectedSubmission = rows[0].name;
@@ -1191,8 +1286,46 @@
       return 'Enviado: ' + date.toLocaleString('es-CO', { dateStyle: 'medium', timeStyle: 'short' });
     }
     function renderAdmin() {
+      document.getElementById('adminBox').hidden = adminUnlocked;
       document.getElementById('adminTools').classList.toggle('unlocked', adminUnlocked);
+      document.getElementById('adminStatus').textContent = adminUnlocked ? 'Admin activo' : 'Admin bloqueado';
+      document.getElementById('adminStatus').className = 'badge ' + (adminUnlocked ? 'done' : 'warn');
       document.querySelectorAll('.admin-only').forEach(el => el.style.display = adminUnlocked ? '' : 'none');
+    }
+    function renderGlobalSearchOptions() {
+      const box = document.getElementById('globalSearchOptions');
+      const names = state.submissions.map(s => s.name);
+      const teams = [...new Set(MATCHES.flatMap(m => [m.home, m.away]).filter(Boolean))];
+      box.innerHTML = [...names, ...teams, ...MATCHES.map(m => '#' + m.id)].map(value => '<option value="' + escapeAttr(value) + '"></option>').join('');
+    }
+    function runGlobalSearch() {
+      const input = document.getElementById('globalSearch');
+      const raw = input.value.trim();
+      if (!raw) return;
+      const query = normalizeText(raw);
+      const person = ranking().find(sub => normalizeText(sub.name).includes(query));
+      if (person) {
+        selectedSubmission = person.name;
+        followRound = person.round;
+        setScreen('follow');
+        renderAll();
+        scrollToPanel('submissionDetail');
+        showToast('Mostrando resultados de ' + person.name);
+        return;
+      }
+      const match = MATCHES.find(m => normalizeText('#' + m.id + ' ' + teamName(m, 'home') + ' ' + teamName(m, 'away')).includes(query));
+      if (match) {
+        followRound = match.round;
+        setScreen('follow');
+        renderAll();
+        scrollToPanel('actualGrid');
+        showToast('Mostrando partido #' + match.id);
+        return;
+      }
+      showToast('No encontré: ' + raw);
+    }
+    function scrollToPanel(id) {
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
     }
     async function downloadSubmission() {
       const name = document.getElementById('playerName').value.trim();
@@ -1255,6 +1388,7 @@
         const sub = payload?.simulatorSubmission;
         if (!sub?.name || !sub?.round || !sub?.picks) continue;
         const clean = { name: sub.name, round: sub.round, picks: sub.picks, sourceFile: file.name, submittedAt: sub.exportedAt || '', loadedAt: new Date().toISOString() };
+        if (HIDDEN_SUBMISSION_KEYS.has(submissionKey(clean))) continue;
         const idx = state.submissions.findIndex(s => s.name.toLowerCase() === clean.name.toLowerCase() && s.round === clean.round);
         if (idx >= 0) state.submissions[idx] = clean;
         else state.submissions.push(clean);
@@ -1275,7 +1409,7 @@
       const clone = document.documentElement.cloneNode(true);
       const tag = clone.querySelector('#embedded-state');
       if (tag) tag.textContent = JSON.stringify(state).replace(/</g, '\\u003c');
-      ['betRoundTabs','followRoundTabs','betFixtureGrid','quickOverview','bracketGrid','actualGrid','rankingBody','ranking','submissionDetail','submissionList'].forEach(id => {
+      ['betRoundTabs','followRoundTabs','betFixtureGrid','quickOverview','recentPoints','bracketGrid','actualGrid','rankingBody','ranking','submissionDetail','submissionList','globalSearchOptions'].forEach(id => {
         const el = clone.querySelector('#' + id);
         if (el) el.innerHTML = '';
       });
@@ -1302,6 +1436,9 @@
     function slugify(text) {
       return String(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'apostador';
     }
+    function normalizeText(text) {
+      return String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    }
     function escapeHtml(text) { return String(text ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     function escapeAttr(text) { return escapeHtml(text).replace(/"/g,'&quot;'); }
     function showToast(message) {
@@ -1319,11 +1456,18 @@
       renderAll();
     }));
     document.getElementById('downloadBtn').addEventListener('click', downloadSubmission);
+    document.getElementById('globalSearchBtn').addEventListener('click', runGlobalSearch);
+    document.getElementById('globalSearch').addEventListener('keydown', e => { if (e.key === 'Enter') runGlobalSearch(); });
+    document.querySelectorAll('[data-scroll-target]').forEach(btn => btn.addEventListener('click', () => {
+      setScreen('follow');
+      renderAll();
+      scrollToPanel(btn.dataset.scrollTarget);
+    }));
     document.getElementById('printBtn').addEventListener('click', () => window.print());
     document.getElementById('adminToggle').addEventListener('click', () => {
       setScreen('follow');
       renderAll();
-      document.getElementById('adminBox').classList.toggle('open');
+      scrollToPanel('adminPanel');
     });
     document.getElementById('unlockBtn').addEventListener('click', () => {
       if (document.getElementById('adminKey').value === ADMIN_KEY) {
