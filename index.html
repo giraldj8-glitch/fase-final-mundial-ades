@@ -1199,19 +1199,28 @@
     function validActual(actual) {
       return actual && Number.isFinite(Number(actual.h)) && Number.isFinite(Number(actual.a)) && actual.winner && actual.method;
     }
-    function scorePick(pick, actual) {
+    function effectiveWinner(entry, match) {
+      if (!entry || !match) return entry?.winner || '';
+      if (entry.method !== 'penalties' && Number.isFinite(Number(entry.h)) && Number.isFinite(Number(entry.a)) && Number(entry.h) !== Number(entry.a)) {
+        return Number(entry.h) > Number(entry.a) ? teamName(match, 'home') : teamName(match, 'away');
+      }
+      return entry.winner || '';
+    }
+    function scorePick(pick, actual, match) {
       if (!validPick(pick) || !validActual(actual)) return null;
+      const pickWinner = effectiveWinner(pick, match);
+      const actualWinner = effectiveWinner(actual, match);
       let total = 0, parts = { qualifier: 0, score: 0, method: 0 };
-      if (pick.winner === actual.winner) { parts.qualifier = ROUND_POINTS.qualifier; total += parts.qualifier; }
+      if (pickWinner === actualWinner) { parts.qualifier = ROUND_POINTS.qualifier; total += parts.qualifier; }
       if (Number(pick.h) === Number(actual.h) && Number(pick.a) === Number(actual.a)) { parts.score = ROUND_POINTS.score; total += parts.score; }
-      if (pick.winner === actual.winner && pick.method === actual.method) { parts.method = ROUND_POINTS.method; total += parts.method; }
+      if (pickWinner === actualWinner && pick.method === actual.method) { parts.method = ROUND_POINTS.method; total += parts.method; }
       return { total, ...parts };
     }
     function submissionStats(sub) {
       let total = 0, qualifier = 0, score = 0, method = 0, pending = 0, missed = 0;
       Object.entries(sub.picks || {}).forEach(([id, pick]) => {
         const actual = state.actuals[id];
-        const pts = scorePick(pick, actual);
+        const pts = scorePick(pick, actual, matchById(id));
         if (!pts) { pending++; return; }
         total += pts.total;
         if (pts.qualifier) qualifier++;
@@ -1248,7 +1257,7 @@
       const rows = ranking();
       box.innerHTML = matches.map(m => {
         const actual = state.actuals[m.id];
-        const scored = rows.map(sub => ({ name: sub.name, pts: scorePick(sub.picks?.[m.id], actual) }))
+        const scored = rows.map(sub => ({ name: sub.name, pts: scorePick(sub.picks?.[m.id], actual, m) }))
           .filter(row => row.pts && row.pts.total > 0)
           .sort((a,b) => b.pts.total - a.pts.total || a.name.localeCompare(b.name, 'es'))
           .slice(0, 3);
@@ -1286,7 +1295,7 @@
       return roundMatches(sub.round).filter(isKnown).map(m => {
         const pick = sub.picks[m.id] || {};
         const h = teamName(m, 'home'), a = teamName(m, 'away');
-        const pts = scorePick(pick, state.actuals[m.id]);
+        const pts = scorePick(pick, state.actuals[m.id], m);
         return '<div class="pick-line"><b>#' + m.id + '</b><div><strong>' + flag(h) + ' ' + escapeHtml(h) + ' vs ' + flag(a) + ' ' + escapeHtml(a) + '</strong><small>Clasifica: ' + flag(pick.winner) + ' ' + escapeHtml(pick.winner) + ' · ' + methodLabel(pick.method) + '</small></div><span class="badge ' + (pts ? 'done' : 'warn') + '">' + Number(pick.h) + '-' + Number(pick.a) + (pts ? ' · ' + pts.total + ' pts' : ' · Pend.') + '</span></div>';
       }).join('');
     }

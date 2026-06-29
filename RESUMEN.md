@@ -61,4 +61,5 @@ Fuentes usadas:
 - Laura G fue cargada desde `Fase Final Mundial ADES.pdf`; el cruce #73 quedó como Sudáfrica 0 - Canadá 0, Canadá por penales, y el #76 como Brasil 2 - Japón 1.
 - Resultados reales cargados: Canadá venció 1-0 a Sudáfrica en tiempo reglamentario y Brasil venció 2-1 a Japón en tiempo reglamentario.
 - El panel admin ahora recalcula tabla, llave, últimos puntos y detalle apenas se cambian campos de resultados; además un resultado oficial completo ya no queda tapado por intentos locales incompletos guardados en el navegador.
+- Si una apuesta de tiempo reglamentario o prórroga tiene marcador no empatado, el sistema deduce el clasificado desde el marcador para evitar errores cuando el selector manual contradice los goles.
 - La tabla permite abrir el detalle de cada participante y ver su marca de envío, archivo origen y picks completos.
