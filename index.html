@@ -659,9 +659,22 @@
       transition: transform .24s ease;
     }
     .toast.show { transform: translate(-50%, 0); }
+    .local-data-notice {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,180,67,.34);
+      border-radius: var(--radius);
+      background: rgba(255,180,67,.1);
+    }
+    .local-data-notice p { margin: 0; color: var(--muted); }
+    .local-data-notice strong { color: var(--orange); }
 
     @media (max-width: 980px) {
-      .topbar, .hero, .layout, .fixture-grid, .formbar, .home-actions, .quick-steps, .quick-overview, .recent-strip { grid-template-columns: 1fr; }
+      .topbar, .hero, .layout, .fixture-grid, .formbar, .home-actions, .quick-steps, .quick-overview, .recent-strip, .local-data-notice { grid-template-columns: 1fr; }
       .actions { justify-content: start; }
     }
     @media (max-width: 680px) {
@@ -703,6 +716,11 @@
         </div>
       </div>
     </header>
+
+    <div class="local-data-notice" id="localDataNotice" hidden>
+      <p><strong>Datos locales activos.</strong> Este navegador tiene cambios guardados. Si no ves la última versión publicada, vuelve al HTML de GitHub.</p>
+      <button class="btn warn" id="resetLocalBtn" type="button">Usar versión publicada</button>
+    </div>
 
     <section class="screen active" id="screen-home">
       <div class="hero">
@@ -1033,6 +1051,7 @@
     }
 
     function renderAll() {
+      renderLocalDataNotice();
       renderScreens();
       renderTabs('betRoundTabs', betRound, value => { betRound = value; renderAll(); });
       renderTabs('followRoundTabs', followRound, value => { followRound = value; renderAll(); });
@@ -1045,6 +1064,11 @@
       renderRanking();
       renderAdmin();
       renderGlobalSearchOptions();
+    }
+    function renderLocalDataNotice() {
+      let hasLocal = false;
+      try { hasLocal = Boolean(localStorage.getItem(STORAGE_KEY)); } catch (e) {}
+      document.getElementById('localDataNotice').hidden = !hasLocal;
     }
     function setScreen(name) {
       activeScreen = name;
@@ -1545,6 +1569,10 @@
       renderAll();
     }));
     document.getElementById('downloadBtn').addEventListener('click', downloadSubmission);
+    document.getElementById('resetLocalBtn').addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      window.location.reload();
+    });
     document.getElementById('closeSubmissionModal').addEventListener('click', closeSubmissionModal);
     document.getElementById('submissionModal').addEventListener('click', e => { if (e.target.id === 'submissionModal') closeSubmissionModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSubmissionModal(); });
