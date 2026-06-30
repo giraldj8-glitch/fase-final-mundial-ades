@@ -10,7 +10,7 @@
 
 1. El apostador abre `index.html`.
 2. Revisa las reglas visibles en el inicio.
-3. Entra por el botón grande **Agregar apuesta**.
+3. Entra por **Apuesta 8vos** cuando haya cruces de octavos definidos.
 4. Llena su nombre.
 5. En cada cruce toca el equipo que clasifica, elige cómo clasifica y escribe un solo marcador.
 6. Descarga sus resultados y los envía por WhatsApp. Por dentro sigue siendo un archivo HTML para que el admin lo pueda importar.
@@ -57,6 +57,7 @@ Fuentes usadas:
 - La tabla de posiciones aparece aunque todavía no haya apuestas importadas, con una fila de estado vacío.
 - La vista de llave usa columnas por ronda y muestra de qué partidos vienen los ganadores; se alimenta de los resultados cargados por el admin y muestra campeón cuando se defina la final.
 - La pantalla principal incluye buscador, accesos rápidos desplazables arriba, panel admin visible, tabla, detalle por participante y últimos puntos por partido cargado.
+- La apuesta de 16avos quedó cerrada visualmente; la acción principal de apuesta ahora apunta a 8vos y solo permite descargar los cruces de octavos que ya estén definidos.
 - Estado actual: 13 participantes reales de 16avos importados en `index.html`; `Andres G` quedó restaurado como participante aparte de `Alberto Gamba`.
 - Laura G fue cargada desde `Fase Final Mundial ADES.pdf`; el cruce #73 quedó como Sudáfrica 0 - Canadá 0, Canadá por penales, y el #76 como Brasil 2 - Japón 1.
 - Resultados reales cargados: Canadá venció 1-0 a Sudáfrica en tiempo reglamentario; Brasil venció 2-1 a Japón en tiempo reglamentario; Paraguay empató 1-1 con Alemania y clasificó por penales; Marruecos empató 1-1 con Países Bajos y clasificó por penales.
