@@ -312,6 +312,39 @@
       border-radius: var(--radius);
       background: rgba(37,43,53,.84);
     }
+    .bet-card {
+      border-color: rgba(17,20,25,.12);
+      background: #f8fafc;
+      color: var(--ink);
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
+    .bet-card.complete { border-color: rgba(50,216,148,.55); }
+    .bet-card.needs-method { border-color: rgba(255,180,67,.8); box-shadow: 0 0 0 2px rgba(255,180,67,.16), 0 12px 26px rgba(0,0,0,.18); }
+    .bet-card .fixture-head,
+    .bet-card .pick-step-title,
+    .bet-card .mini-field label,
+    .bet-card .versus { color: #516070; }
+    .bet-card .team {
+      border-color: rgba(17,20,25,.12);
+      background: #fff;
+      color: var(--ink);
+    }
+    .bet-card button.team.selected {
+      border-color: rgba(16,185,129,.7);
+      background: #e9fbf3;
+      color: #0f7b50;
+    }
+    .bet-card input {
+      border-color: rgba(17,20,25,.16);
+      background: #fff;
+      color: var(--ink);
+    }
+    .bet-card .badge {
+      border-color: rgba(17,20,25,.12);
+      background: #eef3f8;
+      color: #354151;
+      white-space: normal;
+    }
     .fixture.done { border-color: rgba(50,216,148,.42); }
     .fixture-head { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .78rem; font-weight: 850; }
     .teams {
@@ -356,6 +389,16 @@
       border-top: 1px dashed rgba(255,255,255,.16);
     }
     .pick-step { display: grid; gap: 8px; }
+    .bet-card .pick-step {
+      padding: 10px;
+      border: 1px solid rgba(17,20,25,.08);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    .bet-card .method-step.required {
+      border-color: rgba(255,180,67,.62);
+      background: #fff8eb;
+    }
     .pick-step-title { color: var(--gray); font-size: .72rem; text-transform: uppercase; font-weight: 900; }
     .method-buttons {
       display: grid;
@@ -371,12 +414,52 @@
       padding: 7px 9px;
       font-weight: 850;
     }
+    .bet-card .method-buttons button {
+      border-color: rgba(17,20,25,.16);
+      background: #f3f6fa;
+      color: #354151;
+    }
     .method-buttons button.selected {
       border-color: rgba(34,199,216,.56);
       background: rgba(34,199,216,.14);
       color: var(--cyan);
     }
+    .bet-card .method-buttons button.selected {
+      border-color: rgba(62,123,239,.7);
+      background: #eaf1ff;
+      color: #1f5bd1;
+    }
     .method-buttons button[disabled] { opacity: .5; cursor: not-allowed; }
+    .bet-alert, .bet-status {
+      display: grid;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      font-size: .86rem;
+      font-weight: 760;
+      line-height: 1.3;
+    }
+    .bet-alert.warn {
+      border: 1px solid rgba(255,180,67,.58);
+      background: #fff3d8;
+      color: #7a4b00;
+    }
+    .bet-alert.info {
+      border: 1px solid rgba(17,20,25,.12);
+      background: #eef3f8;
+      color: #516070;
+    }
+    .bet-alert.done {
+      border: 1px solid rgba(50,216,148,.38);
+      background: #e9fbf3;
+      color: #0f7b50;
+    }
+    .bet-status {
+      margin: 0 0 12px;
+      border: 1px solid rgba(34,199,216,.28);
+      background: rgba(34,199,216,.08);
+      color: var(--muted);
+    }
     .mini-field { display: grid; gap: 5px; }
     .mini-field label { font-size: .64rem; }
     .meta {
@@ -781,6 +864,7 @@
             <small>En celular intentará compartir el archivo. Si no se puede, lo descarga y abre WhatsApp para que lo adjuntes.</small>
           </div>
         </div>
+        <div class="bet-status" id="betCompletionNotice"></div>
         <div class="fixture-grid" id="betFixtureGrid"></div>
       </main>
     </section>
@@ -1098,20 +1182,43 @@
         : 'Esta ronda está cerrada para descargar; puedes verla como referencia.';
       document.getElementById('betOpenRoundBadge').textContent = open ? 'Ronda abierta' : 'Consulta';
       document.getElementById('betOpenRoundBadge').className = 'badge ' + (open ? 'done' : 'warn');
+      renderBetProgress(open);
       document.getElementById('betFixtureGrid').innerHTML = roundMatches(betRound).map(m => betFixtureCard(m, open)).join('');
       bindBetInputs();
+    }
+    function renderBetProgress(open) {
+      const matches = roundMatches(betRound).filter(isKnown);
+      const done = matches.filter(m => validPick(draft[m.id])).length;
+      const pending = matches.length - done;
+      const box = document.getElementById('betCompletionNotice');
+      if (!open) {
+        box.textContent = 'Esta ronda está en modo consulta. Para descargar resultados, el admin debe abrir la ronda correspondiente.';
+        return;
+      }
+      box.textContent = matches.length
+        ? 'Autoguardado activo en este navegador. Puedes llenar ' + matches.length + ' cruces definidos; completos: ' + done + ', pendientes: ' + pending + '.'
+        : 'Autoguardado activo. Los cruces aparecerán apenas el admin cargue más clasificados.';
     }
     function betFixtureCard(m, open) {
       const h = teamName(m, 'home'), a = teamName(m, 'away');
       const known = isKnown(m);
       const pick = draft[m.id] || {};
       const disabled = open && known ? '' : ' disabled';
+      const complete = validPick(pick);
+      const needsMethod = open && known && !pick.method;
       const scoreNote = pick.method === 'regulation'
         ? 'Marcador de los 90 minutos.'
         : pick.method
           ? 'Marcador tras 120 minutos, sin contar penales.'
           : 'Elige la forma para saber si el marcador es de 90 o de 120 minutos.';
-      return '<article class="fixture">' +
+      const methodNotice = !known
+        ? '<div class="bet-alert info">Este cruce se activa cuando estén definidos los dos clasificados.</div>'
+        : !open
+        ? '<div class="bet-alert info">Esta ronda está en modo consulta y no permite descargar nuevas apuestas.</div>'
+        : pick.method
+        ? '<div class="bet-alert done">Modalidad seleccionada: ' + methodLabel(pick.method) + '.</div>'
+        : '<div class="bet-alert warn">Falta seleccionar la modalidad. Es obligatorio elegir tiempo reglamentario, prórroga o penales antes de descargar.</div>';
+      return '<article class="fixture bet-card ' + (complete ? 'complete ' : '') + (needsMethod ? 'needs-method' : '') + '">' +
         '<div class="fixture-head"><span>#' + m.id + '</span><span>' + (m.date || BRACKET_DATES[m.round] || '') + ' · ' + (m.time || 'Hora por definir') + ' COL</span></div>' +
         '<div class="pick-step"><div class="pick-step-title">1. ¿Quién clasifica?</div><div class="teams">' +
           teamButton(m.id, h, pick.winner, disabled) +
@@ -1119,7 +1226,7 @@
           teamButton(m.id, a, pick.winner, disabled) +
         '</div></div>' +
         '<div class="meta"><span class="badge">' + (m.venue || 'Sede por definir') + '</span><span class="badge warn">' + scoreNote + '</span></div>' +
-        '<div class="pick-step"><div class="pick-step-title">2. ¿Cómo clasifica?</div>' + methodButtons(m.id, pick.method, disabled) + '</div>' +
+        '<div class="pick-step method-step ' + (needsMethod ? 'required' : '') + '"><div class="pick-step-title">2. ¿Cómo clasifica? · obligatorio</div>' + methodButtons(m.id, pick.method, disabled) + methodNotice + '</div>' +
         '<div class="pick-step"><div class="pick-step-title">3. Marcador único</div>' +
         '<div class="prediction">' +
           miniNumber('Goles ' + h, m.id, 'h', pick.h, disabled) +
@@ -1275,6 +1382,12 @@
     }
     function validPick(pick) {
       return pick && Number.isFinite(Number(pick.h)) && Number.isFinite(Number(pick.a)) && pick.winner && pick.method;
+    }
+    function missingPickReason(pick) {
+      if (!pick?.winner) return 'clasificado';
+      if (!pick?.method) return 'modalidad';
+      if (!Number.isFinite(Number(pick.h)) || !Number.isFinite(Number(pick.a))) return 'marcador';
+      return 'datos';
     }
     function validActual(actual) {
       return actual && Number.isFinite(Number(actual.h)) && Number.isFinite(Number(actual.a)) && actual.winner && actual.method;
@@ -1449,7 +1562,11 @@
       const matches = roundMatches(state.openRound).filter(isKnown);
       if (!matches.length) { showToast('Aún no hay cruces definidos para ' + roundInfo(state.openRound).title); return; }
       const missing = matches.filter(m => !validPick(draft[m.id]));
-      if (missing.length) { showToast('Faltan ' + missing.length + ' partidos por completar'); return; }
+      if (missing.length) {
+        const first = missing[0];
+        showToast('Falta completar #' + first.id + ': ' + missingPickReason(draft[first.id]) + '.');
+        return;
+      }
       const picks = {};
       matches.forEach(m => { picks[m.id] = draft[m.id]; });
       const payload = { version: 1, simulatorSubmission: { name, round: state.openRound, picks, exportedAt: new Date().toISOString() } };
