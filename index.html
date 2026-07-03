@@ -395,7 +395,7 @@
       border-radius: var(--radius);
       background: #fff;
     }
-    .bet-card .method-step.required {
+    .bet-card .pick-step.required {
       border-color: rgba(255,180,67,.62);
       background: #fff8eb;
     }
@@ -1205,6 +1205,7 @@
       const pick = draft[m.id] || {};
       const disabled = open && known ? '' : ' disabled';
       const complete = validPick(pick);
+      const needsWinner = open && known && !pick.winner;
       const needsMethod = open && known && !pick.method;
       const scoreNote = pick.method === 'regulation'
         ? 'Marcador de los 90 minutos.'
@@ -1218,13 +1219,20 @@
         : pick.method
         ? '<div class="bet-alert done">Modalidad seleccionada: ' + methodLabel(pick.method) + '.</div>'
         : '<div class="bet-alert warn">Falta seleccionar la modalidad. Es obligatorio elegir tiempo reglamentario, prórroga o penales antes de descargar.</div>';
-      return '<article class="fixture bet-card ' + (complete ? 'complete ' : '') + (needsMethod ? 'needs-method' : '') + '">' +
+      const winnerNotice = !known
+        ? '<div class="bet-alert info">Este cruce se activa cuando estén definidos los dos clasificados.</div>'
+        : !open
+        ? '<div class="bet-alert info">Esta ronda está en modo consulta y no permite descargar nuevas apuestas.</div>'
+        : pick.winner
+        ? '<div class="bet-alert done">Clasificado seleccionado: ' + flag(pick.winner) + ' ' + escapeHtml(pick.winner) + '.</div>'
+        : '<div class="bet-alert warn">Falta seleccionar quién clasifica. Toca uno de los dos equipos para continuar.</div>';
+      return '<article class="fixture bet-card ' + (complete ? 'complete ' : '') + (needsWinner || needsMethod ? 'needs-method' : '') + '">' +
         '<div class="fixture-head"><span>#' + m.id + '</span><span>' + (m.date || BRACKET_DATES[m.round] || '') + ' · ' + (m.time || 'Hora por definir') + ' COL</span></div>' +
-        '<div class="pick-step"><div class="pick-step-title">1. ¿Quién clasifica?</div><div class="teams">' +
+        '<div class="pick-step winner-step ' + (needsWinner ? 'required' : '') + '"><div class="pick-step-title">1. ¿Quién clasifica? · obligatorio</div><div class="teams">' +
           teamButton(m.id, h, pick.winner, disabled) +
           '<div class="versus">vs</div>' +
           teamButton(m.id, a, pick.winner, disabled) +
-        '</div></div>' +
+        '</div>' + winnerNotice + '</div>' +
         '<div class="meta"><span class="badge">' + (m.venue || 'Sede por definir') + '</span><span class="badge warn">' + scoreNote + '</span></div>' +
         '<div class="pick-step method-step ' + (needsMethod ? 'required' : '') + '"><div class="pick-step-title">2. ¿Cómo clasifica? · obligatorio</div>' + methodButtons(m.id, pick.method, disabled) + methodNotice + '</div>' +
         '<div class="pick-step"><div class="pick-step-title">3. Marcador único</div>' +

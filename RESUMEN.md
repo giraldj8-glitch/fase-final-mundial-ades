@@ -65,5 +65,5 @@ Fuentes usadas:
 - El panel admin ahora recalcula tabla, llave, últimos puntos y detalle apenas se cambian campos de resultados; además un resultado oficial completo ya no queda tapado por intentos locales incompletos guardados en el navegador.
 - Si una apuesta de tiempo reglamentario o prórroga tiene marcador no empatado, el sistema deduce el clasificado desde el marcador para evitar errores cuando el selector manual contradice los goles.
 - El botón **Ver resultados** abre un panel flotante con la apuesta completa del participante, para no tener que bajar hasta el detalle inferior.
-- La interfaz de apuestas ahora usa tarjetas claras, progreso de autoguardado y alerta visible cuando falta elegir la modalidad de clasificación antes de descargar.
+- La interfaz de apuestas ahora usa tarjetas claras, progreso de autoguardado y alertas visibles cuando falta elegir clasificado o modalidad antes de descargar.
 - La tabla permite abrir el detalle de cada participante y ver su marca de envío, archivo origen y picks completos.
