@@ -53,7 +53,7 @@ Fuentes usadas:
 - El formulario de apuesta tiene autoguardado local del nombre y los picks de la ronda en curso, para que no se pierda si recargan o cierran el navegador.
 - Si el navegador tiene datos locales del tablero, aparece un aviso con **Usar versión publicada** para borrar esos cambios locales y recargar el HTML publicado. No borra el borrador de apuesta.
 - El admin puede importar múltiples HTML a la vez.
-- El botón de envío intenta compartir el archivo desde iPhone/Android usando el menú nativo. Si el navegador no permite adjuntar archivos, descarga el HTML y abre WhatsApp al número `573132776899` con el mensaje listo.
+- El botón de envío intenta compartir el archivo desde iPhone/Android usando el menú nativo. Si el navegador no permite adjuntar archivos, descarga el HTML y abre WhatsApp al número `573132776988` con el mensaje listo.
 - Los resultados reales se guardan en el navegador y también quedan embebidos al exportar el HTML actualizado.
 - La tabla de posiciones aparece aunque todavía no haya apuestas importadas, con una fila de estado vacío.
 - La vista de llave usa columnas por ronda y muestra de qué partidos vienen los ganadores; se alimenta de los resultados cargados por el admin y muestra campeón cuando se defina la final.
