@@ -1434,10 +1434,37 @@
       });
       return { total, qualifier, score, method, pending, missed };
     }
+    function emptyStats() {
+      return { total: 0, qualifier: 0, score: 0, method: 0, pending: 0, missed: 0 };
+    }
+    function addStats(target, source) {
+      Object.keys(target).forEach(key => target[key] += source[key] || 0);
+      return target;
+    }
+    function roundScope(roundId) {
+      if (!roundId) return ROUNDS.map(r => r.id);
+      const index = ROUNDS.findIndex(r => r.id === roundId);
+      return index >= 0 ? ROUNDS.slice(0, index + 1).map(r => r.id) : [roundId];
+    }
+    function cumulativeLabel(roundId) {
+      return roundId === 'r32' ? '16avos' : 'Acumulado hasta ' + roundInfo(roundId).label;
+    }
     function ranking(roundId='') {
-      return state.submissions
-      .filter(s => !roundId || s.round === roundId)
-      .map(s => ({ ...s, stats: submissionStats(s) })).sort((a,b) =>
+      const scope = roundScope(roundId);
+      const grouped = new Map();
+      state.submissions.filter(s => scope.includes(s.round)).forEach(sub => {
+        const nameKey = normalizeText(sub.name);
+        const current = grouped.get(nameKey) || { name: sub.name, round: sub.round, picks: {}, stats: emptyStats(), submissions: [] };
+        current.name = current.name || sub.name;
+        current.picks = { ...current.picks, ...(sub.picks || {}) };
+        current.submissions.push(sub);
+        addStats(current.stats, submissionStats(sub));
+        grouped.set(nameKey, current);
+      });
+      return [...grouped.values()].map(row => {
+        const detail = row.submissions.find(sub => sub.round === roundId) || row.submissions[row.submissions.length - 1];
+        return { ...detail, name: detail.name || row.name, round: detail.round || roundId, picks: detail.picks || row.picks, stats: row.stats, cumulativeRounds: row.submissions.map(sub => sub.round) };
+      }).sort((a,b) =>
         b.stats.total - a.stats.total || b.stats.qualifier - a.stats.qualifier || b.stats.score - a.stats.score || b.stats.method - a.stats.method || a.name.localeCompare(b.name, 'es')
       );
     }
@@ -1476,12 +1503,12 @@
     function renderRanking() {
       const rows = ranking(followRound);
       if (!selectedSubmission && rows.length) selectedSubmission = submissionKey(rows[0]);
-      document.getElementById('submissionCount').textContent = rows.length + ' ' + roundInfo(followRound).label;
+      document.getElementById('submissionCount').textContent = rows.length + ' · ' + cumulativeLabel(followRound);
       document.getElementById('rankingBody').innerHTML = rows.length ? rows.map((s,i) =>
-        '<tr class="' + (i === 0 ? 'top' : '') + '"><td><b>' + (i + 1) + '</b></td><td><b>' + escapeHtml(s.name) + '</b><br><small class="gray">' + roundInfo(s.round).label + ' · ' + submittedLabel(s) + '</small><button class="btn detail-btn" type="button" data-submission-detail="' + escapeAttr(submissionKey(s)) + '">Ver detalle</button></td><td>' + roundInfo(s.round).label + '</td><td class="num"><b>' + s.stats.total + '</b></td><td class="num green">' + s.stats.qualifier + '</td><td class="num orange">' + s.stats.score + '</td><td class="num cyan">' + s.stats.method + '</td><td class="num gray">' + s.stats.pending + '</td></tr>'
+        '<tr class="' + (i === 0 ? 'top' : '') + '"><td><b>' + (i + 1) + '</b></td><td><b>' + escapeHtml(s.name) + '</b><br><small class="gray">' + cumulativeLabel(followRound) + ' · detalle ' + roundInfo(s.round).label + ' · ' + submittedLabel(s) + '</small><button class="btn detail-btn" type="button" data-submission-detail="' + escapeAttr(submissionKey(s)) + '">Ver detalle</button></td><td>' + cumulativeLabel(followRound) + '</td><td class="num"><b>' + s.stats.total + '</b></td><td class="num green">' + s.stats.qualifier + '</td><td class="num orange">' + s.stats.score + '</td><td class="num cyan">' + s.stats.method + '</td><td class="num gray">' + s.stats.pending + '</td></tr>'
       ).join('') : '<tr><td colspan="8" class="gray">Aún no hay apuestas importadas. Cuando cargues los HTML recibidos por WhatsApp, aparecerán aquí.</td></tr>';
       document.getElementById('ranking').innerHTML = rows.length ? rows.map((s,i) =>
-        '<div class="rank-row"><div class="pos">' + (i + 1) + '</div><div><b>' + escapeHtml(s.name) + '</b><small>' + roundInfo(s.round).label + ' · ' + submittedLabel(s) + '</small><button class="btn detail-btn" type="button" data-submission-detail="' + escapeAttr(submissionKey(s)) + '">Ver detalle</button></div><strong>' + s.stats.total + ' pts</strong></div>'
+        '<div class="rank-row"><div class="pos">' + (i + 1) + '</div><div><b>' + escapeHtml(s.name) + '</b><small>' + cumulativeLabel(followRound) + ' · detalle ' + roundInfo(s.round).label + '</small><button class="btn detail-btn" type="button" data-submission-detail="' + escapeAttr(submissionKey(s)) + '">Ver detalle</button></div><strong>' + s.stats.total + ' pts</strong></div>'
       ).join('') : '<div class="empty">Aún no hay apuestas importadas.</div>';
       document.getElementById('submissionList').innerHTML = rows.length ? rows.map(s => '<div class="rank-row"><div class="pos">HTML</div><div><b>' + escapeHtml(s.name) + '</b><small>' + escapeHtml(s.sourceFile || 'importado') + '</small></div><span class="badge done">' + Object.keys(s.picks || {}).length + ' partidos</span></div>').join('') : '<div class="empty">Sin archivos recibidos.</div>';
       document.querySelectorAll('[data-submission-detail]').forEach(btn => btn.addEventListener('click', () => {
@@ -1500,7 +1527,7 @@
     function openSubmissionModal(key) {
       selectedSubmission = key;
       renderSubmissionDetail();
-      const sub = ranking().find(s => submissionKey(s) === selectedSubmission) || ranking().find(s => s.name === selectedSubmission);
+      const sub = ranking(followRound).find(s => submissionKey(s) === selectedSubmission) || ranking(followRound).find(s => s.name === selectedSubmission);
       if (!sub) return;
       document.getElementById('modalTitle').textContent = sub.name + ' · ' + roundInfo(sub.round).label + ' · ' + sub.stats.total + ' pts';
       document.getElementById('modalMeta').textContent = roundInfo(sub.round).title + ' · ' + submittedLabel(sub) + ' · ' + (sub.sourceFile || 'importado');
