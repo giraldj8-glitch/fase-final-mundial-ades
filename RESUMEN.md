@@ -67,3 +67,4 @@ Fuentes usadas:
 - El botón **Ver resultados** abre un panel flotante con la apuesta completa del participante, para no tener que bajar hasta el detalle inferior.
 - La interfaz de apuestas ahora usa tarjetas claras, progreso de autoguardado y alertas visibles cuando falta elegir clasificado o modalidad antes de descargar.
 - La tabla permite abrir el detalle de cada participante y ver su marca de envío, archivo origen y picks completos.
+- Se importaron 11 apuestas de octavos desde `Apuesta 8avos/`; cada archivo quedó integrado como ronda `r16` con 8 picks por participante.
