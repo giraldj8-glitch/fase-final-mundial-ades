@@ -74,3 +74,5 @@ Fuentes usadas:
 - Resultado real actualizado en octavos: Brasil 1-2 Noruega, clasifica Noruega en tiempo reglamentario.
 - Resultado real actualizado en octavos: México 2-3 Inglaterra, clasifica Inglaterra en tiempo reglamentario.
 - Resultado real actualizado en octavos: Portugal 0-1 España, clasifica España en tiempo reglamentario.
+- La vista de llaves se reorganizó en dos zonas laterales con final y campeón al centro para leer mejor el camino de cada lado.
+- Se abrió la apuesta de cuartos (`qf`): permite llenar los cruces definidos y mantiene bloqueados los pendientes hasta que el admin cargue más clasificados.
