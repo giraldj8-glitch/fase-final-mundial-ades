@@ -71,3 +71,4 @@ Fuentes usadas:
 - La tabla muestra puntos acumulados hasta la fase seleccionada; el detalle sigue abriendo la apuesta concreta de esa fase.
 - Resultado real actualizado en octavos: Canadá 0-3 Marruecos, clasifica Marruecos en tiempo reglamentario.
 - Resultado real actualizado en octavos: Paraguay 0-1 Francia, clasifica Francia en tiempo reglamentario.
+- Resultado real actualizado en octavos: Brasil 1-2 Noruega, clasifica Noruega en tiempo reglamentario.
