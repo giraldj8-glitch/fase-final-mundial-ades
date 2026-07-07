@@ -76,3 +76,4 @@ Fuentes usadas:
 - Resultado real actualizado en octavos: Portugal 0-1 España, clasifica España en tiempo reglamentario.
 - La vista de llaves se reorganizó en dos zonas laterales con final y campeón al centro para leer mejor el camino de cada lado.
 - Se abrió la apuesta de cuartos (`qf`): permite llenar los cruces definidos y mantiene bloqueados los pendientes hasta que el admin cargue más clasificados.
+- Resultado real actualizado en octavos: Estados Unidos 1-4 Bélgica, clasifica Bélgica en tiempo reglamentario.
