@@ -79,3 +79,5 @@ Fuentes usadas:
 - Se abrió la apuesta de cuartos (`qf`): permite llenar los cruces definidos y mantiene bloqueados los pendientes hasta que el admin cargue más clasificados.
 - Resultado real actualizado en octavos: Estados Unidos 1-4 Bélgica, clasifica Bélgica en tiempo reglamentario.
 - Fechas actualizadas en hora Colombia para octavos, cuartos, semifinales y final. El cuarto #97 quedó en orden oficial Francia vs Marruecos.
+- Resultado real actualizado en octavos: Argentina 3-2 Egipto, clasifica Argentina en tiempo reglamentario.
+- Resultado real actualizado en octavos: Suiza 0-0 Colombia, clasifica Suiza por penales.
