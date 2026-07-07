@@ -45,6 +45,7 @@ Fuentes usadas:
 - SBNation: `https://www.sbnation.com/soccer/1120771/world-cup-schedule-scores-round-32`
 - FIFA scores/fixtures: `https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures`
 - Knockout stage/formato: `https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage`
+- Fechas y horarios de octavos, cuartos, semifinales y final contrastados con el cuadro de eliminación: `https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage`
 
 ## Notas técnicas
 
@@ -58,7 +59,7 @@ Fuentes usadas:
 - La tabla de posiciones aparece aunque todavía no haya apuestas importadas, con una fila de estado vacío.
 - La vista de llave usa columnas por ronda y muestra de qué partidos vienen los ganadores; se alimenta de los resultados cargados por el admin y muestra campeón cuando se defina la final.
 - La pantalla principal incluye buscador, accesos rápidos desplazables arriba, panel admin visible, tabla, detalle por participante y últimos puntos por partido cargado.
-- La apuesta de 16avos quedó cerrada visualmente; la acción principal de apuesta ahora apunta a 8vos y solo permite descargar los cruces de octavos que ya estén definidos.
+- La apuesta de 16avos quedó cerrada visualmente; la acción principal de apuesta ahora apunta a cuartos y solo permite descargar los cruces de cuartos que ya estén definidos.
 - Estado actual: 13 participantes reales de 16avos importados en `index.html`; `Andres G` quedó restaurado como participante aparte de `Alberto Gamba`.
 - Laura G fue cargada desde `Fase Final Mundial ADES.pdf`; el cruce #73 quedó como Sudáfrica 0 - Canadá 0, Canadá por penales, y el #76 como Brasil 2 - Japón 1.
 - Resultados reales cargados: Canadá venció 1-0 a Sudáfrica en tiempo reglamentario; Brasil venció 2-1 a Japón en tiempo reglamentario; Paraguay empató 1-1 con Alemania y clasificó por penales; Marruecos empató 1-1 con Países Bajos y clasificó por penales; Noruega venció 2-1 a Costa de Marfil en tiempo reglamentario; Francia venció 3-0 a Suecia en tiempo reglamentario; México venció 2-0 a Ecuador en tiempo reglamentario; Inglaterra venció 2-1 a RD Congo en tiempo reglamentario; Estados Unidos venció 2-0 a Bosnia en tiempo reglamentario; Bélgica venció 3-2 a Senegal en prórroga; Portugal venció 2-1 a Croacia en tiempo reglamentario; España venció 3-0 a Austria en tiempo reglamentario; Suiza venció 2-0 a Argelia en tiempo reglamentario; Egipto empató 1-1 con Australia y clasificó por penales; Argentina venció 3-2 a Cabo Verde en prórroga; Colombia venció 1-0 a Ghana en tiempo reglamentario.
@@ -77,3 +78,4 @@ Fuentes usadas:
 - La vista de llaves se reorganizó en dos zonas laterales con final y campeón al centro para leer mejor el camino de cada lado.
 - Se abrió la apuesta de cuartos (`qf`): permite llenar los cruces definidos y mantiene bloqueados los pendientes hasta que el admin cargue más clasificados.
 - Resultado real actualizado en octavos: Estados Unidos 1-4 Bélgica, clasifica Bélgica en tiempo reglamentario.
+- Fechas actualizadas en hora Colombia para octavos, cuartos, semifinales y final. El cuarto #97 quedó en orden oficial Francia vs Marruecos.
