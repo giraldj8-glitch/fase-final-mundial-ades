@@ -81,3 +81,4 @@ Fuentes usadas:
 - Fechas actualizadas en hora Colombia para octavos, cuartos, semifinales y final. El cuarto #97 quedó en orden oficial Francia vs Marruecos.
 - Resultado real actualizado en octavos: Argentina 3-2 Egipto, clasifica Argentina en tiempo reglamentario.
 - Resultado real actualizado en octavos: Suiza 0-0 Colombia, clasifica Suiza por penales.
+- Corrección de apuesta: Daniela Vivas en #96 quedó como Colombia 1-0 sobre Suiza; con el resultado real Suiza por penales no suma puntos en ese partido.
