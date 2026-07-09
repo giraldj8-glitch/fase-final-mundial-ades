@@ -84,3 +84,4 @@ Fuentes usadas:
 - Corrección de apuesta: Daniela Vivas en #96 quedó como Colombia 1-0 sobre Suiza; con el resultado real Suiza por penales no suma puntos en ese partido.
 - Se importaron 12 apuestas de cuartos desde `Apuesta 4tos/`; falta Cristian Avila frente a los 13 participantes de octavos.
 - Se importó la apuesta de cuartos de Cristian Avila; cuartos queda con 13/13 participantes.
+- Se ajustaron las marcas de envío de cuartos antes de las 3:00 p.m. para Luisa Pulido, Cristian Avila y Santiago Giraldo.
