@@ -82,3 +82,4 @@ Fuentes usadas:
 - Resultado real actualizado en octavos: Argentina 3-2 Egipto, clasifica Argentina en tiempo reglamentario.
 - Resultado real actualizado en octavos: Suiza 0-0 Colombia, clasifica Suiza por penales.
 - Corrección de apuesta: Daniela Vivas en #96 quedó como Colombia 1-0 sobre Suiza; con el resultado real Suiza por penales no suma puntos en ese partido.
+- Se importaron 12 apuestas de cuartos desde `Apuesta 4tos/`; falta Cristian Avila frente a los 13 participantes de octavos.
