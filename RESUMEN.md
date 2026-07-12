@@ -87,3 +87,5 @@ Fuentes usadas:
 - Se ajustaron las marcas de envío de cuartos antes de las 3:00 p.m. para Luisa Pulido, Cristian Avila y Santiago Giraldo.
 - Resultado real actualizado en cuartos: Francia 2-0 Marruecos, clasifica Francia en tiempo reglamentario.
 - Resultado real actualizado en cuartos: España 2-1 Bélgica, clasifica España en tiempo reglamentario.
+- Resultado real actualizado en cuartos: Noruega 1-2 Inglaterra, clasifica Inglaterra en prórroga.
+- Resultado real actualizado en cuartos: Argentina 3-1 Suiza, clasifica Argentina en prórroga.
