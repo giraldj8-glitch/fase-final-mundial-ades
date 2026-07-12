@@ -89,3 +89,4 @@ Fuentes usadas:
 - Resultado real actualizado en cuartos: España 2-1 Bélgica, clasifica España en tiempo reglamentario.
 - Resultado real actualizado en cuartos: Noruega 1-2 Inglaterra, clasifica Inglaterra en prórroga.
 - Resultado real actualizado en cuartos: Argentina 3-1 Suiza, clasifica Argentina en prórroga.
+- Se abrió la apuesta de semifinales (`sf`) con los cruces Francia vs España e Inglaterra vs Argentina.
