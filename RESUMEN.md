@@ -92,3 +92,5 @@ Fuentes usadas:
 - Se abrió la apuesta de semifinales (`sf`) con los cruces Francia vs España e Inglaterra vs Argentina.
 - Se importaron 13 apuestas de semifinales desde `Apuesta semis/`; semifinales queda con 13/13 participantes. Luisa Pulido y Santiago Giraldo quedaron con marca de envío del lunes 13 de julio de 2026.
 - Resultado real actualizado en semifinales: Francia 0-2 España, clasifica España en tiempo reglamentario.
+- Resultado real actualizado en semifinales: Inglaterra 1-2 Argentina, clasifica Argentina en tiempo reglamentario.
+- Se abrió la apuesta de la final (`final`) con el cruce España vs Argentina.
