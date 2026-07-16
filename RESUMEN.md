@@ -94,3 +94,4 @@ Fuentes usadas:
 - Resultado real actualizado en semifinales: Francia 0-2 España, clasifica España en tiempo reglamentario.
 - Resultado real actualizado en semifinales: Inglaterra 1-2 Argentina, clasifica Argentina en tiempo reglamentario.
 - Se abrió la apuesta de la final (`final`) con el cruce España vs Argentina.
+- Se corrigió la regla de puntaje: el marcador exacto solo suma si también coincide la modalidad de clasificación. Ejemplo: Daniela Vivas en Inglaterra 1-2 Argentina suma 3 puntos porque acertó Argentina, pero eligió prórroga y el resultado fue en tiempo reglamentario.

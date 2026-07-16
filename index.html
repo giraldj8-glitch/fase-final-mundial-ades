@@ -1489,10 +1489,13 @@
       if (!validPick(pick) || !validActual(actual)) return null;
       const pickWinner = effectiveWinner(pick, match);
       const actualWinner = effectiveWinner(actual, match);
+      const winnerOk = pickWinner === actualWinner;
+      const methodOk = pick.method === actual.method;
+      const scoreOk = Number(pick.h) === Number(actual.h) && Number(pick.a) === Number(actual.a);
       let total = 0, parts = { qualifier: 0, score: 0, method: 0 };
-      if (pickWinner === actualWinner) { parts.qualifier = ROUND_POINTS.qualifier; total += parts.qualifier; }
-      if (Number(pick.h) === Number(actual.h) && Number(pick.a) === Number(actual.a)) { parts.score = ROUND_POINTS.score; total += parts.score; }
-      if (pickWinner === actualWinner && pick.method === actual.method) { parts.method = ROUND_POINTS.method; total += parts.method; }
+      if (winnerOk) { parts.qualifier = ROUND_POINTS.qualifier; total += parts.qualifier; }
+      if (winnerOk && methodOk && scoreOk) { parts.score = ROUND_POINTS.score; total += parts.score; }
+      if (winnerOk && methodOk) { parts.method = ROUND_POINTS.method; total += parts.method; }
       return { total, ...parts };
     }
     function submissionStats(sub) {
