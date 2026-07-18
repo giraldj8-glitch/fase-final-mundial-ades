@@ -841,7 +841,7 @@
         </div>
         <div class="actions">
           <button class="btn" data-screen="home" type="button">Inicio</button>
-          <button class="btn primary" data-screen="bet" type="button">Apuesta final</button>
+          <button class="btn primary" data-screen="bet" type="button">Apuesta final + 3er puesto</button>
           <button class="btn success" data-screen="follow" type="button">Seguir resultados</button>
           <button class="btn" data-scroll-target="bracketPanel" type="button">Llave</button>
           <button class="btn" data-scroll-target="rankingPanel" type="button">Tabla</button>
@@ -862,10 +862,10 @@
         <div class="panel">
           <div class="eyebrow">16avos, octavos, cuartos y semis acumulados · final abierta</div>
           <h2>Sigue la tabla y prepara la final.</h2>
-          <p class="muted">La apuesta de 16avos, octavos, cuartos y semifinales ya queda acumulada en la tabla. Ahora puedes seguir resultados y llenar la apuesta de la final.</p>
+          <p class="muted">La apuesta de 16avos, octavos, cuartos y semifinales ya queda acumulada en la tabla. Ahora puedes seguir resultados y llenar la apuesta de la final y del tercer puesto.</p>
           <div class="deadline-card">
-            <strong>Apuesta de la final</strong>
-            <span>Se habilita con los equipos que ya clasificaron. Los cruces pendientes se activan cuando el admin cargue más ganadores de octavos.</span>
+            <strong>Apuesta de la final y tercer puesto</strong>
+            <span>Final: España vs Argentina. Tercer puesto: Francia vs Inglaterra. Ambos partidos quedan en la misma descarga.</span>
           </div>
           <div class="rules-summary">
             <h3>Reglas rápidas</h3>
@@ -878,7 +878,7 @@
           </div>
           <div class="home-actions">
             <button class="btn big success" data-screen="follow" type="button">Seguir resultados <span>Tabla de participantes, resultados reales y panel de administración.</span></button>
-            <button class="btn big primary glow" data-screen="bet" type="button">Apuesta final <span>Llena el cruce España vs Argentina y descarga tus resultados.</span></button>
+            <button class="btn big primary glow" data-screen="bet" type="button">Apuesta final + 3er puesto <span>Llena España vs Argentina y Francia vs Inglaterra; luego descarga tus resultados.</span></button>
           </div>
         </div>
         <div class="panel score-system">
@@ -1035,8 +1035,8 @@
 
   <script>
     const ADMIN_KEY = 'ades2026';
-    const STORAGE_KEY = 'ades_ko_simulator_2026_v1';
-    const DRAFT_KEY = 'ades_ko_bet_draft_2026_v1';
+    const STORAGE_KEY = 'ades_ko_simulator_2026_v2';
+    const DRAFT_KEY = 'ades_ko_bet_draft_2026_v2';
     const WHATSAPP_NUMBER = '573132776988';
     const HIDDEN_SUBMISSION_KEYS = new Set();
     const ROUNDS = [
@@ -1044,7 +1044,7 @@
       { id: 'r16', label: 'Octavos', title: 'Octavos de final', ids: ['89','90','91','92','93','94','95','96'] },
       { id: 'qf', label: 'Cuartos', title: 'Cuartos de final', ids: ['97','98','99','100'] },
       { id: 'sf', label: 'Semis', title: 'Semifinales', ids: ['101','102'] },
-      { id: 'final', label: 'Final', title: 'Final', ids: ['103'] }
+      { id: 'final', label: 'Final', title: 'Final y tercer puesto', ids: ['103','104'] }
     ];
     const ROUND_POINTS = { qualifier: 3, score: 5, method: 2 };
     const FLAGS = {"Sudáfrica":"🇿🇦","Canadá":"🇨🇦","Brasil":"🇧🇷","Japón":"🇯🇵","Alemania":"🇩🇪","Paraguay":"🇵🇾","Países Bajos":"🇳🇱","Marruecos":"🇲🇦","Costa de Marfil":"🇨🇮","Noruega":"🇳🇴","Francia":"🇫🇷","Suecia":"🇸🇪","México":"🇲🇽","Ecuador":"🇪🇨","Inglaterra":"🏴","RD Congo":"🇨🇩","Bélgica":"🇧🇪","Senegal":"🇸🇳","Estados Unidos":"🇺🇸","Bosnia":"🇧🇦","España":"🇪🇸","Austria":"🇦🇹","Portugal":"🇵🇹","Croacia":"🇭🇷","Suiza":"🇨🇭","Argelia":"🇩🇿","Australia":"🇦🇺","Egipto":"🇪🇬","Argentina":"🇦🇷","Cabo Verde":"🇨🇻","Colombia":"🇨🇴","Ghana":"🇬🇭"};
@@ -1079,9 +1079,10 @@
       { id:'100', round:'qf', homeFrom:'95', awayFrom:'96', date:'Sáb 11 jul', time:'8:00 p.m.', venue:'Kansas City Stadium' },
       { id:'101', round:'sf', homeFrom:'97', awayFrom:'98', date:'Mar 14 jul', time:'2:00 p.m.', venue:'Dallas Stadium' },
       { id:'102', round:'sf', homeFrom:'99', awayFrom:'100', date:'Mié 15 jul', time:'2:00 p.m.', venue:'Atlanta Stadium' },
-      { id:'103', round:'final', homeFrom:'101', awayFrom:'102', date:'Dom 19 jul', time:'2:00 p.m.', venue:'New York/New Jersey Stadium' }
+      { id:'103', round:'final', home:'Francia', away:'Inglaterra', date:'Sáb 18 jul', time:'4:00 p.m.', venue:'Miami Stadium' },
+      { id:'104', round:'final', homeFrom:'101', awayFrom:'102', date:'Dom 19 jul', time:'2:00 p.m.', venue:'New York/New Jersey Stadium' }
     ];
-    const BRACKET_DATES = { r16: '4-7 jul', qf: '9-11 jul', sf: '14-15 jul', final: '19 jul' };
+    const BRACKET_DATES = { r16: '4-7 jul', qf: '9-11 jul', sf: '14-15 jul', final: '18-19 jul' };
     const BRACKET_ZONES = [
       { side: 'left', label: 'Zona izquierda', note: 'camino a la semifinal #101', cols: [
         { title: 'Octavos', ids: ['89','90','93','94'] },
@@ -1359,7 +1360,7 @@
     }
     function renderBracket() {
       document.getElementById('bracketGrid').innerHTML = bracketZone(BRACKET_ZONES[0]) + bracketCenter() + bracketZone(BRACKET_ZONES[1]);
-      const champ = state.actuals['103']?.winner;
+      const champ = state.actuals['104']?.winner;
       const badge = document.getElementById('championBadge');
       badge.textContent = champ ? 'Campeón: ' + flag(champ) + ' ' + champ : 'Campeón pendiente';
       badge.className = 'badge ' + (champ ? 'done' : 'warn');
@@ -1374,7 +1375,8 @@
     }
     function bracketCenter() {
       return '<div class="bracket-center">' +
-        '<div class="bracket-col"><div class="bracket-col-title">Final</div>' + bracketCard(matchById('103')) + '</div>' +
+        '<div class="bracket-col"><div class="bracket-col-title">3er puesto</div>' + bracketCard(matchById('103')) + '</div>' +
+        '<div class="bracket-col"><div class="bracket-col-title">Final</div>' + bracketCard(matchById('104')) + '</div>' +
         championColumn() +
       '</div>';
     }
@@ -1385,7 +1387,7 @@
       return bracketMatch(m, h, a, actual);
     }
     function championColumn() {
-      const final = state.actuals['103'] || {};
+      const final = state.actuals['104'] || {};
       const champ = final.winner;
       return '<div class="bracket-col champion-col"><div class="bracket-col-title">Campeón</div><div class="champion"><span class="gray">Trofeo</span><strong>' + (champ ? flag(champ) + ' ' + escapeHtml(champ) : 'Por definir') + '</strong><span class="badge ' + (champ ? 'done' : 'warn') + '">' + (validActual(final) ? final.h + '-' + final.a + ' · ' + methodLabel(final.method) : 'Final pendiente') + '</span></div></div>';
     }
