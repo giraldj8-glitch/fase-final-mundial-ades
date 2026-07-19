@@ -46,7 +46,12 @@
       outline-offset: 2px;
     }
 
-    .app { width: min(1480px, 100%); margin: 0 auto; padding: 0 16px 20px; }
+    .app {
+      width: min(1480px, 100%);
+      margin: 0 auto;
+      padding: 0 16px 20px;
+      animation: appEnter .58s cubic-bezier(.2,.8,.2,1) both;
+    }
     .topbar {
       position: sticky;
       top: 0;
@@ -63,6 +68,7 @@
       background: rgba(32,36,44,.94);
       box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
+      animation: topbarDrop .5s cubic-bezier(.2,.8,.2,1) both;
     }
 
     .brand { display: flex; gap: 10px; align-items: center; min-width: 0; }
@@ -152,6 +158,7 @@
       gap: 16px;
       align-items: stretch;
       margin-bottom: 16px;
+      animation: panelRise .6s .22s cubic-bezier(.2,.8,.2,1) both;
     }
     .panel, .card {
       border: 1px solid var(--line);
@@ -546,6 +553,7 @@
     }
     .rank-row small, .submission-list small { color: var(--gray); display: block; }
     .home-ranking-panel { margin-bottom: 16px; }
+    .screen.active .home-ranking-panel { animation: panelRise .62s .08s cubic-bezier(.2,.8,.2,1) both; }
     .home-ranking-panel .section-head { align-items: start; }
     .podium {
       display: grid;
@@ -565,6 +573,8 @@
       background: rgba(255,255,255,.045);
       overflow: hidden;
       box-shadow: 0 14px 30px rgba(0,0,0,.22);
+      transform-origin: center bottom;
+      animation: podiumRise .72s cubic-bezier(.2,.8,.2,1) both;
     }
     .podium-card::before {
       content: "";
@@ -574,20 +584,34 @@
       opacity: .5;
       pointer-events: none;
     }
+    .podium-card::after {
+      content: "";
+      position: absolute;
+      top: -30%;
+      bottom: -30%;
+      left: -60%;
+      width: 46%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transform: rotate(18deg) translateX(-140%);
+      animation: podiumSweep 4.8s ease-in-out infinite;
+      pointer-events: none;
+    }
     .podium-card.first {
       min-height: 186px;
       border-color: rgba(255,180,67,.58);
       background: linear-gradient(135deg, rgba(255,180,67,.2), rgba(37,43,53,.92));
       box-shadow: 0 0 0 1px rgba(255,180,67,.14), 0 18px 48px rgba(255,180,67,.18);
-      animation: podiumGlow 2.2s ease-in-out infinite;
+      animation: podiumRise .72s .06s cubic-bezier(.2,.8,.2,1) both, podiumGlow 2.4s 1s ease-in-out infinite;
     }
     .podium-card.second {
       border-color: rgba(203,211,221,.42);
       background: linear-gradient(135deg, rgba(203,211,221,.16), rgba(37,43,53,.9));
+      animation-delay: .16s;
     }
     .podium-card.third {
       border-color: rgba(255,130,85,.42);
       background: linear-gradient(135deg, rgba(255,130,85,.16), rgba(37,43,53,.9));
+      animation-delay: .26s;
     }
     .podium-place {
       width: 44px;
@@ -613,6 +637,7 @@
       font-size: 2rem;
       font-weight: 950;
       line-height: 1;
+      animation: scorePop .7s .55s cubic-bezier(.2,.8,.2,1) both;
     }
     .podium-card small {
       z-index: 1;
@@ -622,6 +647,46 @@
     .home-ranking-table tbody tr:nth-child(1) { background: linear-gradient(90deg, rgba(255,180,67,.18), rgba(50,216,148,.07), transparent); }
     .home-ranking-table tbody tr:nth-child(2) { background: linear-gradient(90deg, rgba(203,211,221,.12), transparent); }
     .home-ranking-table tbody tr:nth-child(3) { background: linear-gradient(90deg, rgba(255,130,85,.12), transparent); }
+    .home-ranking-table tbody tr { animation: rowFade .42s cubic-bezier(.2,.8,.2,1) both; }
+    .home-ranking-table tbody tr:nth-child(1) { animation-delay: .18s; }
+    .home-ranking-table tbody tr:nth-child(2) { animation-delay: .22s; }
+    .home-ranking-table tbody tr:nth-child(3) { animation-delay: .26s; }
+    .home-ranking-table tbody tr:nth-child(4) { animation-delay: .3s; }
+    .home-ranking-table tbody tr:nth-child(5) { animation-delay: .34s; }
+    .home-ranking-table tbody tr:nth-child(6) { animation-delay: .38s; }
+    .home-ranking-table tbody tr:nth-child(7) { animation-delay: .42s; }
+    .home-ranking-table tbody tr:nth-child(8) { animation-delay: .46s; }
+    .home-ranking-table tbody tr:nth-child(9) { animation-delay: .5s; }
+    .home-ranking-table tbody tr:nth-child(10) { animation-delay: .54s; }
+    @keyframes appEnter {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes topbarDrop {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes panelRise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes podiumRise {
+      from { opacity: 0; transform: translateY(26px) scale(.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes podiumSweep {
+      0%, 46% { transform: rotate(18deg) translateX(-150%); opacity: 0; }
+      58% { opacity: .85; }
+      74%, 100% { transform: rotate(18deg) translateX(420%); opacity: 0; }
+    }
+    @keyframes scorePop {
+      from { opacity: 0; transform: translateY(8px) scale(.92); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes rowFade {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
     @keyframes podiumGlow {
       0%, 100% { box-shadow: 0 0 0 1px rgba(255,180,67,.14), 0 18px 44px rgba(255,180,67,.14); }
       50% { box-shadow: 0 0 0 1px rgba(255,180,67,.3), 0 18px 58px rgba(255,180,67,.28); }
@@ -903,7 +968,17 @@
       .hero h2 { font-size: 1.55rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .podium-card.first { animation: none; }
+      .app,
+      .topbar,
+      .hero,
+      .screen.active .home-ranking-panel,
+      .podium-card,
+      .podium-card.first,
+      .podium-card .points,
+      .home-ranking-table tbody tr {
+        animation: none;
+      }
+      .podium-card::after { display: none; }
     }
   </style>
 </head>
@@ -926,7 +1001,6 @@
         </div>
         <div class="actions">
           <button class="btn" data-screen="home" type="button">Inicio</button>
-          <button class="btn primary" data-screen="bet" type="button">Apuesta final + 3er puesto</button>
           <button class="btn success" data-screen="follow" type="button">Seguir resultados</button>
           <button class="btn" data-scroll-target="bracketPanel" type="button">Llave</button>
           <button class="btn" data-scroll-target="rankingPanel" type="button">Tabla</button>
@@ -976,8 +1050,8 @@
           <h2>Resultados y reglas del tablero.</h2>
           <p class="muted">Las apuestas ya están cargadas en la tabla. Desde aquí puedes seguir resultados, revisar la llave y consultar el detalle de cada participante.</p>
           <div class="deadline-card">
-            <strong>Apuesta de la final y tercer puesto</strong>
-            <span>Final: España vs Argentina. Tercer puesto: Francia vs Inglaterra. Ambos partidos quedan en la misma descarga.</span>
+            <strong>Final y tercer puesto</strong>
+            <span>Tercer puesto cargado: Francia 4 - 6 Inglaterra. Final pendiente: España vs Argentina.</span>
           </div>
           <div class="rules-summary">
             <h3>Reglas rápidas</h3>
