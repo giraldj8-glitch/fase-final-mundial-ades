@@ -956,13 +956,17 @@
     .winner-celebration {
       position: fixed;
       inset: 0;
-      z-index: 90;
+      z-index: 200;
       display: grid;
-      place-items: center;
+      place-items: start center;
       padding: 18px;
       pointer-events: none;
       overflow: hidden;
-      animation: celebrationFade 5.4s ease both;
+      isolation: isolate;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,180,67,.28), transparent 28%),
+        linear-gradient(180deg, rgba(9,12,18,.82), rgba(9,12,18,.24) 62%, transparent);
+      animation: celebrationFade 6.6s ease both;
     }
     .winner-celebration[hidden] { display: none; }
     .winner-celebration::before,
@@ -971,11 +975,11 @@
       position: absolute;
       inset: -20%;
       background:
-        linear-gradient(112deg, transparent 28%, rgba(255,180,67,.22) 31%, transparent 34%),
-        linear-gradient(118deg, transparent 48%, rgba(34,199,216,.18) 51%, transparent 54%),
-        linear-gradient(104deg, transparent 66%, rgba(50,216,148,.18) 69%, transparent 72%);
+        linear-gradient(112deg, transparent 24%, rgba(255,180,67,.42) 27%, transparent 30%),
+        linear-gradient(118deg, transparent 43%, rgba(34,199,216,.34) 46%, transparent 49%),
+        linear-gradient(104deg, transparent 62%, rgba(50,216,148,.3) 65%, transparent 68%);
       transform: translateX(-35%);
-      animation: streakField 2.2s cubic-bezier(.2,.8,.2,1) both;
+      animation: streakField 3.2s cubic-bezier(.2,.8,.2,1) both;
     }
     .winner-celebration::after {
       animation-delay: .18s;
@@ -984,18 +988,22 @@
     }
     .winner-card {
       position: relative;
-      width: min(680px, 100%);
+      width: min(720px, 100%);
+      margin-top: clamp(58px, 12vh, 116px);
       display: grid;
-      gap: 8px;
+      gap: 10px;
       place-items: center;
-      padding: 26px 18px;
+      padding: 30px 20px 28px;
       border: 1px solid rgba(255,180,67,.46);
       border-radius: var(--radius);
-      background: rgba(32,36,44,.94);
-      box-shadow: 0 0 0 1px rgba(255,180,67,.14), 0 24px 80px rgba(0,0,0,.42), 0 0 58px rgba(255,180,67,.24);
+      background:
+        linear-gradient(135deg, rgba(255,180,67,.22), transparent 34%),
+        linear-gradient(160deg, rgba(34,199,216,.18), transparent 44%),
+        rgba(20,24,31,.96);
+      box-shadow: 0 0 0 1px rgba(255,180,67,.16), 0 30px 92px rgba(0,0,0,.52), 0 0 82px rgba(255,180,67,.34);
       text-align: center;
       overflow: hidden;
-      animation: winnerCardIn .82s .18s cubic-bezier(.2,.8,.2,1) both;
+      animation: winnerCardIn .95s .12s cubic-bezier(.2,.8,.2,1) both, winnerFloat 2.8s 1s ease-in-out infinite;
     }
     .winner-card::before {
       content: "";
@@ -1013,24 +1021,41 @@
       letter-spacing: .08em;
     }
     .winner-card strong {
-      font-size: 2.4rem;
+      font-size: clamp(2.15rem, 6vw, 4rem);
       line-height: 1;
       overflow-wrap: anywhere;
+      text-shadow: 0 0 30px rgba(255,180,67,.38);
     }
     .winner-card span {
       color: var(--orange);
       font-size: 1.08rem;
       font-weight: 950;
     }
+    .winner-card em {
+      display: inline-grid;
+      place-items: center;
+      min-width: 126px;
+      min-height: 34px;
+      padding: 6px 14px;
+      border: 1px solid rgba(50,216,148,.46);
+      border-radius: var(--pill);
+      background: rgba(50,216,148,.12);
+      color: var(--green);
+      font-style: normal;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
     .winner-trail {
       position: absolute;
-      width: 120px;
-      height: 3px;
+      width: 170px;
+      height: 4px;
       border-radius: var(--pill);
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
       opacity: 0;
       transform: translate(-50vw, 0) rotate(var(--angle));
-      animation: trailDash 2.6s var(--delay) ease-out both;
+      box-shadow: 0 0 18px rgba(255,255,255,.65);
+      animation: trailDash 3.1s var(--delay) ease-out both;
     }
     @keyframes celebrationFade {
       0%, 78% { opacity: 1; }
@@ -1042,8 +1067,12 @@
       to { opacity: 0; transform: translateX(38%); }
     }
     @keyframes winnerCardIn {
-      from { opacity: 0; transform: translateY(28px) scale(.92); }
+      from { opacity: 0; transform: translateY(-26px) scale(.88); filter: blur(8px); }
+      70% { filter: blur(0); }
       to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes winnerFloat {
+      50% { transform: translateY(-8px); }
     }
     @keyframes winnerHalo {
       to { transform: rotate(1turn); }
@@ -1778,9 +1807,9 @@
     function hasScore(actual) {
       return actual && Number.isFinite(Number(actual.h)) && Number.isFinite(Number(actual.a)) && actual.method;
     }
-    function effectiveWinner(entry, match) {
+    function effectiveWinner(entry, match, inferFromScore=false) {
       if (!entry || !match) return entry?.winner || '';
-      if (entry.method !== 'penalties' && Number.isFinite(Number(entry.h)) && Number.isFinite(Number(entry.a)) && Number(entry.h) !== Number(entry.a)) {
+      if (inferFromScore && entry.method !== 'penalties' && Number.isFinite(Number(entry.h)) && Number.isFinite(Number(entry.a)) && Number(entry.h) !== Number(entry.a)) {
         return Number(entry.h) > Number(entry.a) ? teamName(match, 'home') : teamName(match, 'away');
       }
       return entry.winner || '';
@@ -1788,7 +1817,7 @@
     function scorePick(pick, actual, match) {
       if (!validPick(pick) || !validActual(actual)) return null;
       const pickWinner = effectiveWinner(pick, match);
-      const actualWinner = effectiveWinner(actual, match);
+      const actualWinner = effectiveWinner(actual, match, true);
       const winnerOk = pickWinner === actualWinner;
       const methodOk = pick.method === actual.method;
       const scoreOk = Number(pick.h) === Number(actual.h) && Number(pick.a) === Number(actual.a);
@@ -1881,16 +1910,17 @@
       if (!winner || !box) return;
       celebrationShown = true;
       const trails = Array.from({ length: 9 }, (_, i) =>
-        '<i class="winner-trail" style="--delay:' + (i * .14) + 's;--y:' + (-180 + i * 45) + 'px;--angle:' + (-18 + i * 4) + 'deg"></i>'
+        '<i class="winner-trail" style="--delay:' + (i * .11) + 's;--y:' + (-210 + i * 52) + 'px;--angle:' + (-20 + i * 5) + 'deg"></i>'
       ).join('');
       box.innerHTML = trails +
         '<div class="winner-card">' +
           '<small>Ganadora del tablero</small>' +
           '<strong>' + escapeHtml(winner.name) + '</strong>' +
           '<span>' + winner.stats.total + ' puntos</span>' +
+          '<em>Campeona ADES</em>' +
         '</div>';
       box.hidden = false;
-      setTimeout(() => { box.hidden = true; }, 5600);
+      setTimeout(() => { box.hidden = true; }, 6800);
     }
     function renderRecentPoints() {
       const matches = roundMatches(followRound).filter(m => validActual(state.actuals[m.id])).slice(-3).reverse();
